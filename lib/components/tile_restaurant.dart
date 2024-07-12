@@ -1,5 +1,6 @@
 import 'package:dicoding_flutter/common/constants.dart';
-import 'package:dicoding_flutter/model/restaurants.dart';
+import 'package:dicoding_flutter/common/theme.dart';
+import 'package:dicoding_flutter/data/model/restaurant.dart';
 import 'package:flutter/material.dart';
 
 class TileRestaurant extends StatelessWidget {
@@ -22,17 +23,14 @@ class TileRestaurant extends StatelessWidget {
             Card(
               clipBehavior: Clip.antiAlias,
               elevation: 4,
-              child: Hero(
-                tag: restaurant.id,
-                child: Image.network(
-                  restaurant.pictureId,
-                  height: 120,
-                  width: 120,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, _, s) {
-                    return const Text('Error');
-                  },
-                ),
+              child: Image.network(
+                networkImageUrl(restaurant.pictureId, ImageRes.small),
+                height: 120,
+                width: 120,
+                fit: BoxFit.cover,
+                errorBuilder: (context, _, s) {
+                  return const Text('Error');
+                },
               ),
             ),
             const SizedBox(width: defaultPadding),
@@ -40,11 +38,14 @@ class TileRestaurant extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    restaurant.name,
-                    style: Theme.of(context).textTheme.titleMedium,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
+                  Hero(
+                    tag: restaurant.name,
+                    child: Text(
+                      restaurant.name,
+                      style: Theme.of(context).textTheme.titleMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   const SizedBox(height: defaultPadding / 2),
                   Row(
