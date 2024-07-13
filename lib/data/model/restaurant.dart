@@ -1,55 +1,43 @@
-class Restaurant {
-  String id;
-  String name;
-  String description;
-  String city;
-  String address;
-  String pictureId;
-  double rating;
-  List<CustomerReview>? customerReviews;
-  List<Category>? categories;
-  Menus? menus;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Restaurant({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.city,
-    required this.address,
-    required this.pictureId,
-    required this.categories,
-    required this.menus,
-    required this.rating,
-    required this.customerReviews,
-  });
+part 'restaurant.freezed.dart';
+
+@freezed
+class Restaurant with _$Restaurant {
+  const factory Restaurant({
+    required String id,
+    required String name,
+    required String description,
+    required String city,
+    required String address,
+    required String pictureId,
+    required double rating,
+    List<Category>? categories,
+    Menus? menus,
+    List<CustomerReview>? customerReviews,
+  }) = _Restaurant;
 }
 
-class Category {
-  String name;
-
-  Category({
-    required this.name,
-  });
+@freezed
+class Category with _$Category {
+  const factory Category({
+    required String name,
+  }) = _Category;
 }
 
-class CustomerReview {
-  String name;
-  String review;
-  String date;
-
-  CustomerReview({
-    required this.name,
-    required this.review,
-    required this.date,
-  });
+@freezed
+class Menus with _$Menus {
+  const factory Menus({
+    required List<Category> foods,
+    required List<Category> drinks,
+  }) = _Menus;
 }
 
-class Menus {
-  List<Category> foods;
-  List<Category> drinks;
-
-  Menus({
-    required this.foods,
-    required this.drinks,
-  });
+@freezed
+class CustomerReview with _$CustomerReview {
+  const factory CustomerReview({
+    required String name,
+    required String review,
+    required String date,
+  }) = _CustomerReview;
 }

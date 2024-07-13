@@ -43,6 +43,10 @@ abstract class $RestaurantStateCopyWith<$Res> {
       ErrorResult? error,
       List<Restaurant> listRestaurants,
       Restaurant? restaurant});
+
+  $ErrorResultCopyWith<$Res>? get error;
+
+  $RestaurantCopyWith<$Res>? get restaurant;
 }
 
 /// @nodoc
@@ -85,6 +89,34 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
               as Restaurant?,
     ) as $Val);
   }
+
+  /// Create a copy of RestaurantState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ErrorResultCopyWith<$Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $ErrorResultCopyWith<$Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value) as $Val);
+    });
+  }
+
+  /// Create a copy of RestaurantState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $RestaurantCopyWith<$Res>? get restaurant {
+    if (_value.restaurant == null) {
+      return null;
+    }
+
+    return $RestaurantCopyWith<$Res>(_value.restaurant!, (value) {
+      return _then(_value.copyWith(restaurant: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -101,6 +133,12 @@ abstract class _$$RestaurantStateImplCopyWith<$Res>
       ErrorResult? error,
       List<Restaurant> listRestaurants,
       Restaurant? restaurant});
+
+  @override
+  $ErrorResultCopyWith<$Res>? get error;
+
+  @override
+  $RestaurantCopyWith<$Res>? get restaurant;
 }
 
 /// @nodoc

@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart';
-import 'package:dicoding_flutter/data/remote/response/restaurant_response.dart';
-import 'package:dicoding_flutter/data/remote/response/restaurants_response.dart';
+import 'package:dicoding_flutter/data/remote/response/restaurant_detail_response.dart';
+import 'package:dicoding_flutter/data/remote/response/restaurant_list_response.dart';
 import 'package:dicoding_flutter/data/remote/utils/header_interceptor.dart';
 import 'package:dicoding_flutter/data/remote/utils/json_converter.dart';
 
@@ -12,8 +12,10 @@ final chopperClient = ChopperClient(
   baseUrl: Uri.parse(baseUrl),
   services: [ApiService.create()],
   converter: JsonToTypeConverter({
-    RestaurantsResponse: (jsonData) => RestaurantsResponse.fromJson(jsonData),
-    RestaurantResponse: (jsonData) => RestaurantResponse.fromJson(jsonData),
+    RestaurantListResponse: (jsonData) =>
+        RestaurantListResponse.fromJson(jsonData),
+    RestaurantDetailResponse: (jsonData) =>
+        RestaurantDetailResponse.fromJson(jsonData),
   }),
   interceptors: [
     HeaderInterceptor(),

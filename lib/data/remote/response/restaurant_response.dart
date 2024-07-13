@@ -4,27 +4,6 @@ part 'restaurant_response.g.dart';
 
 @JsonSerializable()
 class RestaurantResponse {
-  @JsonKey(name: "error")
-  bool? error;
-  @JsonKey(name: "message")
-  String? message;
-  @JsonKey(name: "restaurant")
-  Restaurant? restaurant;
-
-  RestaurantResponse({
-    this.error,
-    this.message,
-    this.restaurant,
-  });
-
-  factory RestaurantResponse.fromJson(Map<String, dynamic> json) =>
-      _$RestaurantResponseFromJson(json);
-
-  Map<String, dynamic> toJson() => _$RestaurantResponseToJson(this);
-}
-
-@JsonSerializable()
-class Restaurant {
   @JsonKey(name: "id")
   String? id;
   @JsonKey(name: "name")
@@ -38,15 +17,15 @@ class Restaurant {
   @JsonKey(name: "pictureId")
   String? pictureId;
   @JsonKey(name: "categories")
-  List<Category>? categories;
+  List<CategoryResponse>? categories;
   @JsonKey(name: "menus")
-  Menus? menus;
+  MenusResponse? menus;
   @JsonKey(name: "rating")
   double? rating;
   @JsonKey(name: "customerReviews")
-  List<CustomerReview>? customerReviews;
+  List<CustomerReviewResponse>? customerReviews;
 
-  Restaurant({
+  RestaurantResponse({
     this.id,
     this.name,
     this.description,
@@ -59,29 +38,29 @@ class Restaurant {
     this.customerReviews,
   });
 
-  factory Restaurant.fromJson(Map<String, dynamic> json) =>
-      _$RestaurantFromJson(json);
+  factory RestaurantResponse.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RestaurantToJson(this);
+  Map<String, dynamic> toJson() => _$RestaurantResponseToJson(this);
 }
 
 @JsonSerializable()
-class Category {
+class CategoryResponse {
   @JsonKey(name: "name")
   String? name;
 
-  Category({
+  CategoryResponse({
     this.name,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory CategoryResponse.fromJson(Map<String, dynamic> json) =>
+      _$CategoryResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CategoryToJson(this);
+  Map<String, dynamic> toJson() => _$CategoryResponseToJson(this);
 }
 
 @JsonSerializable()
-class CustomerReview {
+class CustomerReviewResponse {
   @JsonKey(name: "name")
   String? name;
   @JsonKey(name: "review")
@@ -89,31 +68,32 @@ class CustomerReview {
   @JsonKey(name: "date")
   String? date;
 
-  CustomerReview({
+  CustomerReviewResponse({
     this.name,
     this.review,
     this.date,
   });
 
-  factory CustomerReview.fromJson(Map<String, dynamic> json) =>
-      _$CustomerReviewFromJson(json);
+  factory CustomerReviewResponse.fromJson(Map<String, dynamic> json) =>
+      _$CustomerReviewResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CustomerReviewToJson(this);
+  Map<String, dynamic> toJson() => _$CustomerReviewResponseToJson(this);
 }
 
 @JsonSerializable()
-class Menus {
+class MenusResponse {
   @JsonKey(name: "foods")
-  List<Category>? foods;
+  List<CategoryResponse>? foods;
   @JsonKey(name: "drinks")
-  List<Category>? drinks;
+  List<CategoryResponse>? drinks;
 
-  Menus({
+  MenusResponse({
     this.foods,
     this.drinks,
   });
 
-  factory Menus.fromJson(Map<String, dynamic> json) => _$MenusFromJson(json);
+  factory MenusResponse.fromJson(Map<String, dynamic> json) =>
+      _$MenusResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MenusToJson(this);
+  Map<String, dynamic> toJson() => _$MenusResponseToJson(this);
 }

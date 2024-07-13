@@ -9,23 +9,23 @@ import 'package:dicoding_flutter/data/remote/service/chopper_client.dart';
 import 'package:either_dart/either.dart';
 
 class RemoteDataSource {
-  late ApiService apiService;
+  late ApiService api;
 
-  RemoteDataSource() {
-    apiService = chopperClient.getService<ApiService>();
+  RemoteDataSource({ApiService? apiService}) {
+    api = apiService ?? chopperClient.getService<ApiService>();
   }
 
   Future<Either<ErrorResult, List<Restaurant>>> getListRestaurants(
       {String? query}) async {
     try {
       final response = query == null
-          ? await apiService.getRestaurants()
-          : await apiService.searchRestaurants(query);
+          ? await api.getRestaurants()
+          : await api.searchRestaurants(query);
       if (response.isSuccessful) {
-        List<Restaurant> list =
+        List<Restaurant> data =
             response.body?.restaurants?.map((e) => e.toModel()).toList() ?? [];
-        if (list.isNotEmpty) {
-          return Right(list);
+        if (data.isNotEmpty) {
+          return Right(data);
         } else {
           throw const HttpException('404');
         }
@@ -39,9 +39,14 @@ class RemoteDataSource {
 
   Future<Either<ErrorResult, Restaurant>> getRestaurant(String id) async {
     try {
-      final response = await apiService.getRestaurant(id);
+      final response = await api.getRestaurant(id);
       if (response.isSuccessful) {
-        return Right(response.body!.restaurant!.toModel());
+        final data = response.body?.restaurant?.toModel();
+        if (data != null) {
+          return Right(data);
+        } else {
+          throw const HttpException('404');
+        }
       } else {
         throw HttpException(response.statusCode.toString());
       }
@@ -55,8 +60,8 @@ class RemoteDataSource {
       required String name,
       required String review}) async {
     try {
-      final response = await apiService.addReview(
-          AddReviewRequest(id: id, name: name, review: review).toJson());
+      final response = await api
+          .addReview(AddReviewRequest(id: id, name: name, review: review));
       if (response.isSuccessful) {
         return const Right(true);
       } else {

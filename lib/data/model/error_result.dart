@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-@immutable
-class ErrorResult {
-  final String? message;
-  final int? code;
-  final Exception? exception;
+part 'error_result.freezed.dart';
 
-  const ErrorResult({this.message, this.code, this.exception});
+@freezed
+class ErrorResult with _$ErrorResult {
+  const factory ErrorResult({
+    String? message,
+    int? code,
+    Exception? exception,
+  }) = _ErrorResult;
 
   static ErrorResult createResult(Exception exception) {
     String errorMsg = 'Error';

@@ -37,6 +37,8 @@ abstract class $ReviewStateCopyWith<$Res> {
 
   @useResult
   $Res call({bool isLoading, ErrorResult? error, bool addSuccess});
+
+  $ErrorResultCopyWith<$Res>? get error;
 }
 
 /// @nodoc
@@ -74,6 +76,20 @@ class _$ReviewStateCopyWithImpl<$Res, $Val extends ReviewState>
               as bool,
     ) as $Val);
   }
+
+  /// Create a copy of ReviewState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ErrorResultCopyWith<$Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $ErrorResultCopyWith<$Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -86,6 +102,9 @@ abstract class _$$ReviewStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({bool isLoading, ErrorResult? error, bool addSuccess});
+
+  @override
+  $ErrorResultCopyWith<$Res>? get error;
 }
 
 /// @nodoc

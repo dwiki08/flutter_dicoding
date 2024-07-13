@@ -18,29 +18,31 @@ final class _$ApiService extends ApiService {
   final Type definitionType = ApiService;
 
   @override
-  Future<Response<RestaurantsResponse>> getRestaurants() {
+  Future<Response<RestaurantListResponse>> getRestaurants() {
     final Uri $url = Uri.parse('/list');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<RestaurantsResponse, RestaurantsResponse>($request);
+    return client
+        .send<RestaurantListResponse, RestaurantListResponse>($request);
   }
 
   @override
-  Future<Response<RestaurantResponse>> getRestaurant(String id) {
+  Future<Response<RestaurantDetailResponse>> getRestaurant(String id) {
     final Uri $url = Uri.parse('/detail/${id}');
     final Request $request = Request(
       'GET',
       $url,
       client.baseUrl,
     );
-    return client.send<RestaurantResponse, RestaurantResponse>($request);
+    return client
+        .send<RestaurantDetailResponse, RestaurantDetailResponse>($request);
   }
 
   @override
-  Future<Response<RestaurantsResponse>> searchRestaurants(String query) {
+  Future<Response<RestaurantListResponse>> searchRestaurants(String query) {
     final Uri $url = Uri.parse('/search');
     final Map<String, dynamic> $params = <String, dynamic>{'q': query};
     final Request $request = Request(
@@ -49,11 +51,12 @@ final class _$ApiService extends ApiService {
       client.baseUrl,
       parameters: $params,
     );
-    return client.send<RestaurantsResponse, RestaurantsResponse>($request);
+    return client
+        .send<RestaurantListResponse, RestaurantListResponse>($request);
   }
 
   @override
-  Future<Response<RestaurantsResponse>> addReview(Map<String, dynamic> body) {
+  Future<Response<GeneralResponse>> addReview(AddReviewRequest? body) {
     final Uri $url = Uri.parse('/review');
     final $body = body;
     final Request $request = Request(
@@ -62,6 +65,6 @@ final class _$ApiService extends ApiService {
       client.baseUrl,
       body: $body,
     );
-    return client.send<RestaurantsResponse, RestaurantsResponse>($request);
+    return client.send<GeneralResponse, GeneralResponse>($request);
   }
 }
