@@ -1,16 +1,17 @@
 # dicoding_flutter
 
-Dicoding Flutter Submissions
+My Dicoding Flutter Submissions : [Multi-Platform App Developer](https://www.dicoding.com/learningpaths/21)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## My Submission Projects
 
-A few resources to get you started if this is your first Flutter project:
+### Belajar Fundamental Aplikasi Flutter
+- [Submission 1](https://github.com/dwiki08/flutter_dicoding/tree/fundamental_sub_1)
+- [Submission 2](https://github.com/dwiki08/flutter_dicoding/tree/fundamental_sub_2)
+- [Submission 3](https://github.com/dwiki08/flutter_dicoding/tree/fundamental_sub_3)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Belajar Pengembangan Aplikasi Flutter Intermediate
+
+
+### Menjadi Flutter Developer Expert
