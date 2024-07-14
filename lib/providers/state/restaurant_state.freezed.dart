@@ -24,6 +24,8 @@ mixin _$RestaurantState {
 
   Restaurant? get restaurant => throw _privateConstructorUsedError;
 
+  bool get isFavorite => throw _privateConstructorUsedError;
+
   /// Create a copy of RestaurantState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -42,7 +44,8 @@ abstract class $RestaurantStateCopyWith<$Res> {
       {bool isLoading,
       ErrorResult? error,
       List<Restaurant> listRestaurants,
-      Restaurant? restaurant});
+      Restaurant? restaurant,
+      bool isFavorite});
 
   $ErrorResultCopyWith<$Res>? get error;
 
@@ -69,6 +72,7 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
     Object? error = freezed,
     Object? listRestaurants = null,
     Object? restaurant = freezed,
+    Object? isFavorite = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -87,6 +91,10 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
               as Restaurant?,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -132,7 +140,8 @@ abstract class _$$RestaurantStateImplCopyWith<$Res>
       {bool isLoading,
       ErrorResult? error,
       List<Restaurant> listRestaurants,
-      Restaurant? restaurant});
+      Restaurant? restaurant,
+      bool isFavorite});
 
   @override
   $ErrorResultCopyWith<$Res>? get error;
@@ -158,6 +167,7 @@ class __$$RestaurantStateImplCopyWithImpl<$Res>
     Object? error = freezed,
     Object? listRestaurants = null,
     Object? restaurant = freezed,
+    Object? isFavorite = null,
   }) {
     return _then(_$RestaurantStateImpl(
       isLoading: null == isLoading
@@ -176,6 +186,10 @@ class __$$RestaurantStateImplCopyWithImpl<$Res>
           ? _value.restaurant
           : restaurant // ignore: cast_nullable_to_non_nullable
               as Restaurant?,
+      isFavorite: null == isFavorite
+          ? _value.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -187,7 +201,8 @@ class _$RestaurantStateImpl implements _RestaurantState {
       {this.isLoading = false,
       this.error,
       final List<Restaurant> listRestaurants = const [],
-      this.restaurant})
+      this.restaurant,
+      this.isFavorite = false})
       : _listRestaurants = listRestaurants;
 
   @override
@@ -207,10 +222,13 @@ class _$RestaurantStateImpl implements _RestaurantState {
 
   @override
   final Restaurant? restaurant;
+  @override
+  @JsonKey()
+  final bool isFavorite;
 
   @override
   String toString() {
-    return 'RestaurantState(isLoading: $isLoading, error: $error, listRestaurants: $listRestaurants, restaurant: $restaurant)';
+    return 'RestaurantState(isLoading: $isLoading, error: $error, listRestaurants: $listRestaurants, restaurant: $restaurant, isFavorite: $isFavorite)';
   }
 
   @override
@@ -224,12 +242,19 @@ class _$RestaurantStateImpl implements _RestaurantState {
             const DeepCollectionEquality()
                 .equals(other._listRestaurants, _listRestaurants) &&
             (identical(other.restaurant, restaurant) ||
-                other.restaurant == restaurant));
+                other.restaurant == restaurant) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, error,
-      const DeepCollectionEquality().hash(_listRestaurants), restaurant);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      error,
+      const DeepCollectionEquality().hash(_listRestaurants),
+      restaurant,
+      isFavorite);
 
   /// Create a copy of RestaurantState
   /// with the given fields replaced by the non-null parameter values.
@@ -246,7 +271,8 @@ abstract class _RestaurantState implements RestaurantState {
       {final bool isLoading,
       final ErrorResult? error,
       final List<Restaurant> listRestaurants,
-      final Restaurant? restaurant}) = _$RestaurantStateImpl;
+      final Restaurant? restaurant,
+      final bool isFavorite}) = _$RestaurantStateImpl;
 
   @override
   bool get isLoading;
@@ -259,6 +285,9 @@ abstract class _RestaurantState implements RestaurantState {
 
   @override
   Restaurant? get restaurant;
+
+  @override
+  bool get isFavorite;
 
   /// Create a copy of RestaurantState
   /// with the given fields replaced by the non-null parameter values.

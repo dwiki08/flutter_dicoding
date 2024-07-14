@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RestaurantProvider>(
+    return ChangeNotifierProvider(
       create: (context) => RestaurantProvider(),
       child: const HomePage(),
     );

@@ -1,10 +1,13 @@
 import 'package:dicoding_flutter/common/constants.dart';
+import 'package:dicoding_flutter/common/navigation.dart';
 import 'package:dicoding_flutter/common/theme.dart';
+import 'package:dicoding_flutter/components/action_icon.dart';
 import 'package:dicoding_flutter/components/error_view.dart';
 import 'package:dicoding_flutter/components/loading.dart';
 import 'package:dicoding_flutter/data/model/error_result.dart';
 import 'package:dicoding_flutter/data/model/restaurant.dart';
 import 'package:dicoding_flutter/providers/restaurant_provider.dart';
+import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
 import 'package:dicoding_flutter/screen/detail/detail_categories.dart';
 import 'package:dicoding_flutter/screen/detail/detail_menus.dart';
 import 'package:dicoding_flutter/screen/detail/detail_reviews.dart';
@@ -27,38 +30,41 @@ class _DetailPageState extends State<DetailPage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RestaurantProvider>().getRestaurant(widget.restaurant.id);
+      context.read<RestaurantProvider>().getIsFavorite(widget.restaurant.id);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final provider = context.read<RestaurantProvider>();
 
     final state = context.watch<RestaurantProvider>().state;
     final categories = state.restaurant?.categories;
     final menus = state.restaurant?.menus;
     final reviews = state.restaurant?.customerReviews;
 
+    getRestaurantDetail() {
+      context.read<RestaurantProvider>().getRestaurant(widget.restaurant.id);
+    }
+
     gotoAddReview() async {
-      final result = await Navigator.pushNamed(
-        context,
-        WriteReview.routeName,
+      final result = await Navigation.intent(
+        route: WriteReview.routeName,
         arguments: widget.restaurant.id,
       );
       if (result == true) {
-        provider.getRestaurant(widget.restaurant.id);
+        getRestaurantDetail();
       }
     }
 
     menusAndReviews() {
-      if (state.isLoading) {
+      if (state.error != null) {
+        return ErrorView(error: state.error);
+      } else if (state.isLoading) {
         return const Padding(
           padding: EdgeInsets.all(defaultPadding),
           child: Loading(),
         );
-      } else if (state.error != null) {
-        return ErrorView(error: state.error);
       } else if (state.restaurant != null) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -70,6 +76,35 @@ class _DetailPageState extends State<DetailPage> {
         );
       } else {
         return const SizedBox();
+      }
+    }
+
+    favoriteButton() {
+      if (state.isFavorite == true) {
+        return actionIconRounded(
+          onPressed: () {
+            context
+                .read<RestaurantProvider>()
+                .deleteFavorite(widget.restaurant.id);
+            context.read<ScreenReloadProvider>().reloadFavoriteScreen();
+          },
+          icon: const Icon(
+            Icons.favorite,
+            color: favoriteColor,
+          ),
+        );
+      } else {
+        return actionIconRounded(
+          onPressed: () {
+            context
+                .read<RestaurantProvider>()
+                .insertFavorite(widget.restaurant);
+            context.read<ScreenReloadProvider>().reloadFavoriteScreen();
+          },
+          icon: const Icon(
+            Icons.favorite_border,
+          ),
+        );
       }
     }
 
@@ -90,20 +125,12 @@ class _DetailPageState extends State<DetailPage> {
           headerSliverBuilder: (context, isScrolled) {
             return [
               SliverAppBar(
-                leading: IconButton(
-                  icon: ClipOval(
-                    child: Container(
-                      color: Colors.white70,
-                      padding: const EdgeInsets.all(4),
-                      child: const Icon(
-                        Icons.arrow_back,
-                      ),
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
+                actions: [
+                  favoriteButton(),
+                ],
+                leading: actionIconRounded(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () => Navigation.back()),
                 pinned: true,
                 expandedHeight: 260,
                 flexibleSpace: FlexibleSpaceBar(

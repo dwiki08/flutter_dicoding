@@ -1,4 +1,5 @@
 import 'package:dicoding_flutter/common/extensions.dart';
+import 'package:dicoding_flutter/common/navigation.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/data/model/error_result.dart';
 import 'package:dicoding_flutter/providers/review_provider.dart';
@@ -25,15 +26,11 @@ class _WriteReviewPageState extends State<WriteReviewPage> {
   @override
   void initState() {
     super.initState();
-
-    isAddSuccess.addListener(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (isAddSuccess.value) Navigator.pop(context, true);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      isAddSuccess.addListener(() {
+        if (isAddSuccess.value) Navigation.back(result: true);
       });
-    });
-
-    errorResult.addListener(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      errorResult.addListener(() {
         if (errorResult.value != null) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(errorResult.value?.code?.httpCodeText() ?? ''),

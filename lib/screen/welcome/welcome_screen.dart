@@ -1,5 +1,6 @@
 import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/common/theme.dart';
+import 'package:dicoding_flutter/screen/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -44,7 +45,8 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/home');
+                      Navigator.pushReplacementNamed(
+                          context, HomeScreen.routeName);
                     },
                     child: const Text("Let's go!"))
               ],

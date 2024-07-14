@@ -11,5 +11,6 @@ class RestaurantState with _$RestaurantState {
     ErrorResult? error,
     @Default([]) List<Restaurant> listRestaurants,
     Restaurant? restaurant,
+    @Default(false) bool isFavorite,
   }) = _RestaurantState;
 }

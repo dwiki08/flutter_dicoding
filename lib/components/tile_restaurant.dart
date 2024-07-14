@@ -1,6 +1,8 @@
 import 'package:dicoding_flutter/common/constants.dart';
+import 'package:dicoding_flutter/common/navigation.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/data/model/restaurant.dart';
+import 'package:dicoding_flutter/screen/detail/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class TileRestaurant extends StatelessWidget {
@@ -12,8 +14,10 @@ class TileRestaurant extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/detailRestaurant',
-            arguments: restaurant);
+        Navigation.intent(
+          route: DetailScreen.routeName,
+          arguments: restaurant,
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(defaultPadding),

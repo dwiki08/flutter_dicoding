@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+Restaurant _$RestaurantFromJson(Map<String, dynamic> json) {
+  return _Restaurant.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Restaurant {
   String get id => throw _privateConstructorUsedError;
@@ -36,6 +40,9 @@ mixin _$Restaurant {
 
   List<CustomerReview>? get customerReviews =>
       throw _privateConstructorUsedError;
+
+  /// Serializes this Restaurant to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Restaurant
   /// with the given fields replaced by the non-null parameter values.
@@ -247,7 +254,7 @@ class __$$RestaurantImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$RestaurantImpl implements _Restaurant {
   const _$RestaurantImpl(
       {required this.id,
@@ -262,6 +269,9 @@ class _$RestaurantImpl implements _Restaurant {
       final List<CustomerReview>? customerReviews})
       : _categories = categories,
         _customerReviews = customerReviews;
+
+  factory _$RestaurantImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RestaurantImplFromJson(json);
 
   @override
   final String id;
@@ -327,6 +337,7 @@ class _$RestaurantImpl implements _Restaurant {
                 .equals(other._customerReviews, _customerReviews));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -348,6 +359,13 @@ class _$RestaurantImpl implements _Restaurant {
   @pragma('vm:prefer-inline')
   _$$RestaurantImplCopyWith<_$RestaurantImpl> get copyWith =>
       __$$RestaurantImplCopyWithImpl<_$RestaurantImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$RestaurantImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Restaurant implements Restaurant {
@@ -362,6 +380,9 @@ abstract class _Restaurant implements Restaurant {
       final List<Category>? categories,
       final Menus? menus,
       final List<CustomerReview>? customerReviews}) = _$RestaurantImpl;
+
+  factory _Restaurant.fromJson(Map<String, dynamic> json) =
+      _$RestaurantImpl.fromJson;
 
   @override
   String get id;
@@ -401,9 +422,16 @@ abstract class _Restaurant implements Restaurant {
       throw _privateConstructorUsedError;
 }
 
+Category _$CategoryFromJson(Map<String, dynamic> json) {
+  return _Category.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Category {
   String get name => throw _privateConstructorUsedError;
+
+  /// Serializes this Category to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Category
   /// with the given fields replaced by the non-null parameter values.
@@ -485,9 +513,12 @@ class __$$CategoryImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CategoryImpl implements _Category {
   const _$CategoryImpl({required this.name});
+
+  factory _$CategoryImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CategoryImplFromJson(json);
 
   @override
   final String name;
@@ -505,6 +536,7 @@ class _$CategoryImpl implements _Category {
             (identical(other.name, name) || other.name == name));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name);
 
@@ -515,10 +547,20 @@ class _$CategoryImpl implements _Category {
   @pragma('vm:prefer-inline')
   _$$CategoryImplCopyWith<_$CategoryImpl> get copyWith =>
       __$$CategoryImplCopyWithImpl<_$CategoryImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CategoryImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Category implements Category {
   const factory _Category({required final String name}) = _$CategoryImpl;
+
+  factory _Category.fromJson(Map<String, dynamic> json) =
+      _$CategoryImpl.fromJson;
 
   @override
   String get name;
@@ -531,11 +573,18 @@ abstract class _Category implements Category {
       throw _privateConstructorUsedError;
 }
 
+Menus _$MenusFromJson(Map<String, dynamic> json) {
+  return _Menus.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Menus {
   List<Category> get foods => throw _privateConstructorUsedError;
 
   List<Category> get drinks => throw _privateConstructorUsedError;
+
+  /// Serializes this Menus to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Menus
   /// with the given fields replaced by the non-null parameter values.
@@ -625,13 +674,16 @@ class __$$MenusImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$MenusImpl implements _Menus {
   const _$MenusImpl(
       {required final List<Category> foods,
       required final List<Category> drinks})
       : _foods = foods,
         _drinks = drinks;
+
+  factory _$MenusImpl.fromJson(Map<String, dynamic> json) =>
+      _$$MenusImplFromJson(json);
 
   final List<Category> _foods;
 
@@ -665,6 +717,7 @@ class _$MenusImpl implements _Menus {
             const DeepCollectionEquality().equals(other._drinks, _drinks));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -678,12 +731,21 @@ class _$MenusImpl implements _Menus {
   @pragma('vm:prefer-inline')
   _$$MenusImplCopyWith<_$MenusImpl> get copyWith =>
       __$$MenusImplCopyWithImpl<_$MenusImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$MenusImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Menus implements Menus {
   const factory _Menus(
       {required final List<Category> foods,
       required final List<Category> drinks}) = _$MenusImpl;
+
+  factory _Menus.fromJson(Map<String, dynamic> json) = _$MenusImpl.fromJson;
 
   @override
   List<Category> get foods;
@@ -699,6 +761,10 @@ abstract class _Menus implements Menus {
       throw _privateConstructorUsedError;
 }
 
+CustomerReview _$CustomerReviewFromJson(Map<String, dynamic> json) {
+  return _CustomerReview.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CustomerReview {
   String get name => throw _privateConstructorUsedError;
@@ -706,6 +772,9 @@ mixin _$CustomerReview {
   String get review => throw _privateConstructorUsedError;
 
   String get date => throw _privateConstructorUsedError;
+
+  /// Serializes this CustomerReview to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of CustomerReview
   /// with the given fields replaced by the non-null parameter values.
@@ -808,10 +877,13 @@ class __$$CustomerReviewImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CustomerReviewImpl implements _CustomerReview {
   const _$CustomerReviewImpl(
       {required this.name, required this.review, required this.date});
+
+  factory _$CustomerReviewImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CustomerReviewImplFromJson(json);
 
   @override
   final String name;
@@ -835,6 +907,7 @@ class _$CustomerReviewImpl implements _CustomerReview {
             (identical(other.date, date) || other.date == date));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, name, review, date);
 
@@ -846,6 +919,13 @@ class _$CustomerReviewImpl implements _CustomerReview {
   _$$CustomerReviewImplCopyWith<_$CustomerReviewImpl> get copyWith =>
       __$$CustomerReviewImplCopyWithImpl<_$CustomerReviewImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CustomerReviewImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _CustomerReview implements CustomerReview {
@@ -853,6 +933,9 @@ abstract class _CustomerReview implements CustomerReview {
       {required final String name,
       required final String review,
       required final String date}) = _$CustomerReviewImpl;
+
+  factory _CustomerReview.fromJson(Map<String, dynamic> json) =
+      _$CustomerReviewImpl.fromJson;
 
   @override
   String get name;

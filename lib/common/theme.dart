@@ -4,6 +4,11 @@ const double defaultPadding = 16.0;
 
 const defaultCircularRadius = Radius.circular(12);
 
+const favoriteColor = Color(0xFFED0761);
+const appBarColor = Color(0xECBBE5FF);
+const navbarItemColor = Color(0xff42515a);
+const navbarSelectedItemColor = Color(0xFF6394C4);
+
 ColorScheme colorScheme(BuildContext context) {
   return ColorScheme.fromSeed(seedColor: const Color(0xff42515a)).copyWith(
     primary: const Color(0xff42515a),
@@ -12,11 +17,18 @@ ColorScheme colorScheme(BuildContext context) {
   );
 }
 
-const appBarColor = Color(0xECBBE5FF);
-
 const appBarShape = RoundedRectangleBorder(
   borderRadius: BorderRadius.only(
       bottomLeft: defaultCircularRadius, bottomRight: defaultCircularRadius),
+);
+
+SwitchThemeData switchTheme = SwitchThemeData(
+  trackColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.selected)) {
+      return const Color(0x4F6394C4);
+    }
+    return null;
+  }),
 );
 
 InputDecoration textFieldDecoration(

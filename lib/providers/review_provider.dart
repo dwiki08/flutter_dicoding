@@ -1,13 +1,10 @@
 import 'package:dicoding_flutter/data/remote/remote_data_source.dart';
 import 'package:dicoding_flutter/providers/state/review_state.dart';
+import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:flutter/foundation.dart';
 
 class ReviewProvider extends ChangeNotifier {
-  late RemoteDataSource remoteDataSource;
-
-  ReviewProvider() {
-    remoteDataSource = RemoteDataSource();
-  }
+  final remoteDataSource = getIt.get<RemoteDataSource>();
 
   ReviewState _state = const ReviewState();
 

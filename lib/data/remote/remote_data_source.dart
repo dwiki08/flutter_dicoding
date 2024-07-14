@@ -5,14 +5,14 @@ import 'package:dicoding_flutter/data/model/error_result.dart';
 import 'package:dicoding_flutter/data/model/restaurant.dart';
 import 'package:dicoding_flutter/data/remote/request/add_review_request.dart';
 import 'package:dicoding_flutter/data/remote/service/api_service.dart';
-import 'package:dicoding_flutter/data/remote/service/chopper_client.dart';
+import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:either_dart/either.dart';
 
 class RemoteDataSource {
   late ApiService api;
 
   RemoteDataSource({ApiService? apiService}) {
-    api = apiService ?? chopperClient.getService<ApiService>();
+    api = apiService ?? getIt.get<ApiService>();
   }
 
   Future<Either<ErrorResult, List<Restaurant>>> getListRestaurants(

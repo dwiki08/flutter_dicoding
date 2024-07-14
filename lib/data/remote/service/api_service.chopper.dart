@@ -56,7 +56,7 @@ final class _$ApiService extends ApiService {
   }
 
   @override
-  Future<Response<GeneralResponse>> addReview(AddReviewRequest? body) {
+  Future<Response<GeneralResponse>> addReview(AddReviewRequest body) {
     final Uri $url = Uri.parse('/review');
     final $body = body;
     final Request $request = Request(

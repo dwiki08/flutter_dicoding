@@ -38,6 +38,14 @@ dependencies:
   provider: ^6.1.2
   chopper: ^8.0.0
   either_dart: ^1.0.0
+  shared_preferences: ^2.2.3
+  android_alarm_manager_plus: ^4.0.3
+  rxdart: ^0.28.0
+  intl: ^0.19.0
+  flutter_local_notifications: ^17.2.1+1
+  path: ^1.8.0
+  floor: ^1.5.0
+  get_it: ^7.7.0
   mockito: ^5.4.4
 
 dev_dependencies:
@@ -47,6 +55,7 @@ dev_dependencies:
   freezed: ^2.5.3
   json_serializable: ^6.8.0
   chopper_generator: ^8.0.0
+  floor_generator: ^1.5.0
 
 dependency_overrides:
   meta: ^1.15.0

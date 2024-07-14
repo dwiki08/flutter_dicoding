@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'restaurant.freezed.dart';
+part 'restaurant.g.dart';
 
 @freezed
 class Restaurant with _$Restaurant {
@@ -16,6 +17,9 @@ class Restaurant with _$Restaurant {
     Menus? menus,
     List<CustomerReview>? customerReviews,
   }) = _Restaurant;
+
+  factory Restaurant.fromJson(Map<String, dynamic> json) =>
+      _$RestaurantFromJson(json);
 }
 
 @freezed
@@ -23,6 +27,9 @@ class Category with _$Category {
   const factory Category({
     required String name,
   }) = _Category;
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
 }
 
 @freezed
@@ -31,6 +38,8 @@ class Menus with _$Menus {
     required List<Category> foods,
     required List<Category> drinks,
   }) = _Menus;
+
+  factory Menus.fromJson(Map<String, dynamic> json) => _$MenusFromJson(json);
 }
 
 @freezed
@@ -40,4 +49,7 @@ class CustomerReview with _$CustomerReview {
     required String review,
     required String date,
   }) = _CustomerReview;
+
+  factory CustomerReview.fromJson(Map<String, dynamic> json) =>
+      _$CustomerReviewFromJson(json);
 }
