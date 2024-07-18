@@ -3,12 +3,15 @@ import 'package:dicoding_flutter/data/local/local_data_source.dart';
 import 'package:dicoding_flutter/routes/route_screen_key.dart';
 import 'package:dicoding_flutter/screen/add_story/add_story_screen.dart';
 import 'package:dicoding_flutter/screen/home/home_screen.dart';
+import 'package:dicoding_flutter/screen/location_picker/location_picker_screen.dart';
 import 'package:dicoding_flutter/screen/login/login_screen.dart';
+import 'package:dicoding_flutter/screen/map_viewer/map_viewer_screen.dart';
 import 'package:dicoding_flutter/screen/register/register_screen.dart';
 import 'package:dicoding_flutter/screen/splash/splash_screen.dart';
 import 'package:dicoding_flutter/screen/story/story_screen.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MyRouterDelegate extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -32,6 +35,8 @@ class MyRouterDelegate extends RouterDelegate
   String? storyId;
   bool? onAddStory;
   bool? onLogoutDialog;
+  bool? onLocationPicker;
+  LatLng? onMapViewer;
 
   List<Page> get _splashStack => const [
         MaterialPage(
@@ -93,6 +98,10 @@ class MyRouterDelegate extends RouterDelegate
             key: ValueKey(RouteKey.story + storyId!),
             child: StoryScreen(
               id: storyId!,
+              onMapView: (LatLng latLng) {
+                onMapViewer = latLng;
+                notifyListeners();
+              },
             ),
           ),
         if (onAddStory == true)
@@ -103,6 +112,27 @@ class MyRouterDelegate extends RouterDelegate
                 onAddStory = false;
                 notifyListeners();
               },
+              onPickLocation: () {
+                onLocationPicker = true;
+                notifyListeners();
+              },
+            ),
+          ),
+        if (onLocationPicker == true)
+          MaterialPage(
+            key: const ValueKey(RouteKey.locationPicker),
+            child: LocationPickerScreen(
+              onPickLocation: (LatLng latLng) {
+                onLocationPicker = false;
+                notifyListeners();
+              },
+            ),
+          ),
+        if (onMapViewer != null)
+          MaterialPage(
+            key: const ValueKey(RouteKey.addStory),
+            child: MapViewerScreen(
+              latLng: onMapViewer!,
             ),
           ),
         if (onLogoutDialog == true)
@@ -116,9 +146,11 @@ class MyRouterDelegate extends RouterDelegate
       ];
 
   onBack() {
-    storyId = null;
-    onAddStory = null;
+    if (onMapViewer == null) storyId = null;
+    onMapViewer = null;
     onLogoutDialog = null;
+    if (onLocationPicker != true) onAddStory = null;
+    onLocationPicker = null;
     notifyListeners();
   }
 

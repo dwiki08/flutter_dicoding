@@ -46,11 +46,23 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 
-	  <key>NSCameraUsageDescription</key>
-        <string>Buka privasi ini untuk akses kamera.</string>
-        <key>NSMicrophoneUsageDescription</key>
-        <string>Buka privasi ini untuk akses mikrofon.</string>
-        <key>NSPhotoLibraryUsageDescription </key>
-        <string>Buka privasi ini untuk akses galeri foto.</string>
+	<key>NSCameraUsageDescription</key>
+    <string>Buka privasi ini untuk akses kamera.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Buka privasi ini untuk akses mikrofon.</string>
+    key>NSPhotoLibraryUsageDescription </key>
+    <string>Buka privasi ini untuk akses galeri foto.</string>
+
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>The app needs user's location permission</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>The app needs user's location permission</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>The app needs location service permission</string>
+
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>location</string>
+    </array>
 </dict>
 </plist>

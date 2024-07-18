@@ -2,6 +2,7 @@ import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/providers/auth_provider.dart';
 import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
+import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/routes/router_delegate.dart';
 import 'package:dicoding_flutter/utils/common.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
@@ -15,6 +16,7 @@ void main() {
   setupInjection();
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (context) => PageManager()),
       ChangeNotifierProvider(create: (context) => ScreenReloadProvider()),
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => SettingProvider()),
@@ -55,9 +57,9 @@ class _MyAppState extends State<MyApp> {
             colorScheme: colorScheme(context),
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-                color: const Color(0xFF6394C4),
-                titleTextStyle:
-                    textTheme.titleLarge?.copyWith(color: Colors.white),
+                color: const Color(0xFF717DBA),
+                titleTextStyle: textTheme.titleLarge
+                    ?.copyWith(color: Colors.white, fontSize: 20),
                 actionsIconTheme: const IconThemeData(color: Colors.white),
                 iconTheme: const IconThemeData(color: Colors.white)),
             textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),

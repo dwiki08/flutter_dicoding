@@ -22,5 +22,8 @@
   "writeStoryHint": "Write your story here...",
   "send": "Send",
   "dialogFillStory": "Please pick an image and write your story first.",
-  "loading": "Loading"
+  "loading": "Loading",
+  "location": "Location",
+  "chooseLocation": "Choose location point",
+  "choose": "Choose"
 }

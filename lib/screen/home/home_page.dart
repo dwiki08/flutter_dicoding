@@ -31,17 +31,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final ScrollController scrollController = ScrollController();
   ValueNotifier<bool> isNeedReload = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<StoryProvider>().getListStory();
-      isNeedReload.addListener(() {
-        context.read<StoryProvider>().getListStory();
-      });
+    final storyProvider = context.read<StoryProvider>();
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent) {
+        if (storyProvider.page != 0) {
+          storyProvider.getListStory();
+        }
+      }
     });
+    Future.microtask(() async {
+      isNeedReload.addListener(() {
+        storyProvider.getListStory(reload: true);
+      });
+      storyProvider.getListStory();
+    });
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   appBar() {
@@ -85,9 +101,18 @@ class _HomePageState extends State<HomePage> {
           case DataState.hasData:
             final List<Story> list = state.list;
             return ListView.builder(
+              controller: scrollController,
               shrinkWrap: true,
-              itemCount: list.length,
+              itemCount: list.length + (state.page != 0 ? 1 : 0),
               itemBuilder: (context, i) {
+                if (i == list.length) {
+                  return const Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(8),
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }
                 return Column(
                   children: [
                     StoryCard(

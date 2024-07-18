@@ -6,4 +6,5 @@ class RouteKey {
   static const story = "story";
   static const addStory = "addStory";
   static const dialog = "dialog";
+  static const locationPicker = "locationPicker";
 }

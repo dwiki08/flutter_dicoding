@@ -9,6 +9,7 @@ import 'package:dicoding_flutter/data/remote/request/register_request.dart';
 import 'package:dicoding_flutter/data/remote/service/api_service.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:either_dart/either.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RemoteDataSource {
   final ApiService _apiService = getIt.get<ApiService>();
@@ -46,9 +47,10 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ErrorResult, List<Story>>> getListStory() async {
+  Future<Either<ErrorResult, List<Story>>> getListStory(
+      {int? page, int? size}) async {
     try {
-      final response = await _apiService.getListStory();
+      final response = await _apiService.getListStory(page: page, size: size);
       if (response.isSuccessful) {
         return Right(
             response.body?.listStory!.map((i) => i.toModel()).toList() ?? []);
@@ -78,12 +80,18 @@ class RemoteDataSource {
   }
 
   Future<Either<ErrorResult, bool>> addStory(
-      {required String description, required String filePath}) async {
+      {required String description,
+      required String filePath,
+      LatLng? location}) async {
     try {
       List<PartValue> requestParams = [
         PartValue("description", description),
         PartValueFile("photo", filePath),
       ];
+      if (location != null) {
+        requestParams.add(PartValue("lat", location.latitude));
+        requestParams.add(PartValue("lon", location.longitude));
+      }
       final response = await _apiService.postStory(requestParams);
       if (response.isSuccessful) {
         return const Right(true);

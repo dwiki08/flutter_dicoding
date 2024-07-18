@@ -7,15 +7,14 @@ part 'story.freezed.dart';
 
 @freezed
 class Story with _$Story {
-  const factory Story({
-    required String id,
-    required String name,
-    required String description,
-    required String photoUrl,
-    required DateTime createdAt,
-    double? lat,
-    double? lon,
-  }) = _Story;
+  const factory Story(
+      {required String id,
+      required String name,
+      required String description,
+      required String photoUrl,
+      required DateTime createdAt,
+      double? lat,
+      double? lon}) = _Story;
 
   const Story._();
 

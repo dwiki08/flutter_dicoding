@@ -22,5 +22,8 @@
   "writeStoryHint": "Tulis ceritamu disini...",
   "send": "Kirim",
   "dialogFillStory": "Mohon pilih gambar dan tulis ceritamu dahulu.",
-  "loading": "Memuat"
+  "loading": "Memuat",
+  "location": "Lokasi",
+  "chooseLocation": "Pilih titik lokasi",
+  "choose": "Pilih"
 }

@@ -7,28 +7,36 @@ import 'package:dicoding_flutter/providers/file_picker_provider.dart';
 import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
 import 'package:dicoding_flutter/providers/state/data_state.dart';
 import 'package:dicoding_flutter/providers/story_provider.dart';
+import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/utils/common.dart';
+import 'package:dicoding_flutter/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart' as geo;
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddStoryPage extends StatefulWidget {
-  const AddStoryPage({super.key, required this.onStoryAdded});
+  const AddStoryPage(
+      {super.key, required this.onStoryAdded, required this.onPickLocation});
 
   final Function() onStoryAdded;
+  final Function() onPickLocation;
 
   @override
   State<AddStoryPage> createState() => _AddStoryPageState();
 }
 
 class _AddStoryPageState extends State<AddStoryPage> {
-  final _reviewTextController = TextEditingController();
+  final _storyTextController = TextEditingController();
   String? filePath;
+  LatLng? location;
+  geo.Placemark? placemark;
 
   @override
   void dispose() {
-    _reviewTextController.dispose();
+    _storyTextController.dispose();
     super.dispose();
   }
 
@@ -37,6 +45,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
     final size = MediaQuery.of(context).size;
     final localize = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     onStoryAdded() {
       context.read<ScreenReloadProvider>().reloadHomeScreen();
@@ -82,13 +91,20 @@ class _AddStoryPageState extends State<AddStoryPage> {
       }
     }
 
+    onPickLocation() async {
+      widget.onPickLocation();
+      final data = await context.read<PageManager>().waitForLatLng();
+      placemark = await getPlacemark(data);
+      location = data;
+    }
+
     fab() {
       final localize = AppLocalizations.of(context)!;
       return Consumer<StoryProvider>(
         builder: (context, state, child) {
           return FloatingActionButton(
             onPressed: () async {
-              if (filePath == null || _reviewTextController.text.isEmpty) {
+              if (filePath == null || _storyTextController.text.isEmpty) {
                 ScaffoldMessenger.of(context)
                     .showSnackBar(defaultSnackBar(localize.dialogFillStory));
                 return;
@@ -96,7 +112,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
                 if (state.state != DataState.isLoading) {
                   await context
                       .read<StoryProvider>()
-                      .addStory(_reviewTextController.text, filePath!);
+                      .addStory(_storyTextController.text, filePath!, location);
                   if (state.storyAdded) {
                     onStoryAdded();
                   }
@@ -157,11 +173,40 @@ class _AddStoryPageState extends State<AddStoryPage> {
                 ),
               ],
             ),
+            const SizedBox(height: defaultPadding),
+            OutlinedButton.icon(
+              onPressed: () => onPickLocation(),
+              icon: const Icon(Icons.location_pin),
+              label: Text(localize.location),
+            ),
             const SizedBox(height: defaultPadding * 2),
+            if (placemark != null)
+              Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: colorScheme.onPrimary, width: 2),
+                    borderRadius: BorderRadius.circular(4)),
+                margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
+                padding: const EdgeInsets.all(defaultPadding / 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text(
+                      placemark!.street!,
+                      style: textTheme.labelLarge,
+                    ),
+                    Text(
+                      '${placemark!.subLocality}, ${placemark!.locality}, ${placemark!.postalCode}, ${placemark!.country}',
+                      style: textTheme.labelMedium,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    )
+                  ],
+                ),
+              ),
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: TextField(
-                  controller: _reviewTextController,
+                  controller: _storyTextController,
                   maxLines: 5,
                   keyboardType: TextInputType.multiline,
                   style: textTheme.bodyMedium,

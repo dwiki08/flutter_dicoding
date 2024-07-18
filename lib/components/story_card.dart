@@ -58,6 +58,9 @@ class StoryCard extends StatelessWidget {
                         style: textTheme.labelMedium,
                       ),
                       const SizedBox(height: defaultPadding / 2),
+                      if (story.lat != null) Text('Lat: ${story.lat}'),
+                      if (story.lon != null) Text('Lon: ${story.lon}'),
+                      const SizedBox(height: defaultPadding / 2),
                       Text(
                         story.description,
                         maxLines: 3,

@@ -5,10 +5,13 @@ import 'package:dicoding_flutter/data/remote/response/story_response.dart';
 extension StoryDTO on StoryResponse {
   Story toModel() {
     return Story(
-        id: id.orEmpty(),
-        name: name.orEmpty(),
-        description: description.orEmpty(),
-        photoUrl: photoUrl.orEmpty(),
-        createdAt: createdAt!);
+      id: id.orEmpty(),
+      name: name.orEmpty(),
+      description: description.orEmpty(),
+      photoUrl: photoUrl.orEmpty(),
+      createdAt: createdAt!,
+      lat: lat,
+      lon: lon,
+    );
   }
 }
