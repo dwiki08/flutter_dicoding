@@ -22,9 +22,9 @@ class _MapViewerScreenState extends State<MapViewerScreen> {
 
   Future<void> defineMarker(LatLng latLng) async {
     final place = await getPlacemark(latLng);
-    final street = place.street!;
+    final street = place?.street;
     final address =
-        '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+        '${place?.subLocality}, ${place?.locality}, ${place?.postalCode}, ${place?.country}';
     final marker = Marker(
       markerId: const MarkerId("source"),
       position: latLng,

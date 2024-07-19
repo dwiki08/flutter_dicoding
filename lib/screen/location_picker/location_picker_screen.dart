@@ -96,7 +96,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
   myLocationButton() {
     return Positioned(
-      bottom: 192,
+      bottom: 200,
       right: 16,
       child: FloatingActionButton.small(
         backgroundColor: Colors.white,
@@ -111,9 +111,9 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
   Future<void> defineMarker(LatLng latLng) async {
     final place = await getPlacemark(latLng);
-    final street = place.street!;
+    final street = place?.street;
     final address =
-        '${place.subLocality}, ${place.locality}, ${place.postalCode}, ${place.country}';
+        '${place?.subLocality}, ${place?.locality}, ${place?.postalCode}, ${place?.country}';
     final marker = Marker(
       markerId: const MarkerId("source"),
       position: latLng,

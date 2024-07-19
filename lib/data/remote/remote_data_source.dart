@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:chopper/chopper.dart';
@@ -8,6 +9,7 @@ import 'package:dicoding_flutter/data/remote/request/login_request.dart';
 import 'package:dicoding_flutter/data/remote/request/register_request.dart';
 import 'package:dicoding_flutter/data/remote/service/api_service.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
+import 'package:dicoding_flutter/utils/utils.dart';
 import 'package:either_dart/either.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -52,12 +54,23 @@ class RemoteDataSource {
     try {
       final response = await _apiService.getListStory(page: page, size: size);
       if (response.isSuccessful) {
-        return Right(
-            response.body?.listStory!.map((i) => i.toModel()).toList() ?? []);
+        final result =
+            response.body?.listStory!.map((i) => i.toModel()).toList() ?? [];
+        List<Story> list = [];
+        for (var s in result) {
+          if (s.lat != null && s.lon != null) {
+            final place = await getPlacemark(LatLng(s.lat!, s.lon!));
+            list.add(s.copyWith(place: place));
+          } else {
+            list.add(s);
+          }
+        }
+        return Right(list);
       } else {
         throw HttpException(response.statusCode.toString());
       }
     } on Exception catch (e) {
+      log('e: $e');
       return Left(ErrorResult.createResult(e));
     }
   }
@@ -75,6 +88,7 @@ class RemoteDataSource {
         throw HttpException(response.statusCode.toString());
       }
     } on Exception catch (e) {
+      log('e: $e');
       return Left(ErrorResult.createResult(e));
     }
   }

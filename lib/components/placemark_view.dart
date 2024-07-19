@@ -22,7 +22,7 @@ class PlacemarkView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 160,
+      height: showChooseButton ? 172 : 128,
       padding: const EdgeInsets.all(16),
       constraints: const BoxConstraints(maxWidth: 700),
       decoration: BoxDecoration(
@@ -36,43 +36,44 @@ class PlacemarkView extends StatelessWidget {
           )
         ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  placemark.street!,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                Expanded(
-                  child: Text(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    placemark.street! + placemark.street!,
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  Text(
                     '${placemark.subLocality}, ${placemark.locality}, ${placemark.postalCode}, ${placemark.country}',
                     style: Theme.of(context).textTheme.labelMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Visibility(
-                    visible: showChooseButton,
-                    child: ElevatedButton.icon(
-                      icon: SvgPicture.asset(
-                        assetsIcons('ic_pin_map.svg'),
-                        height: 24,
-                        width: 24,
-                      ),
-                      onPressed: () {
-                        if (onChooseButton != null) {
-                          onChooseButton!(latLng);
-                        }
-                      },
-                      label: Text(AppLocalizations.of(context)!.choose),
-                    ))
-              ],
+                  )
+                ],
+              ),
             ),
           ),
+          Visibility(
+              visible: showChooseButton,
+              child: ElevatedButton.icon(
+                icon: SvgPicture.asset(
+                  assetsIcons('ic_pin_map.svg'),
+                  height: 24,
+                  width: 24,
+                ),
+                onPressed: () {
+                  if (onChooseButton != null) {
+                    onChooseButton!(latLng);
+                  }
+                },
+                label: Text(AppLocalizations.of(context)!.choose),
+              ))
         ],
       ),
     );

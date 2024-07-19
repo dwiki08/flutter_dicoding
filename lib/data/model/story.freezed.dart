@@ -17,18 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Story {
   String get id => throw _privateConstructorUsedError;
-
   String get name => throw _privateConstructorUsedError;
-
   String get description => throw _privateConstructorUsedError;
-
   String get photoUrl => throw _privateConstructorUsedError;
-
   DateTime get createdAt => throw _privateConstructorUsedError;
-
   double? get lat => throw _privateConstructorUsedError;
-
   double? get lon => throw _privateConstructorUsedError;
+  Placemark? get place => throw _privateConstructorUsedError;
 
   /// Create a copy of Story
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +35,6 @@ mixin _$Story {
 abstract class $StoryCopyWith<$Res> {
   factory $StoryCopyWith(Story value, $Res Function(Story) then) =
       _$StoryCopyWithImpl<$Res, Story>;
-
   @useResult
   $Res call(
       {String id,
@@ -49,7 +43,8 @@ abstract class $StoryCopyWith<$Res> {
       String photoUrl,
       DateTime createdAt,
       double? lat,
-      double? lon});
+      double? lon,
+      Placemark? place});
 }
 
 /// @nodoc
@@ -59,7 +54,6 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -75,6 +69,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
     Object? createdAt = null,
     Object? lat = freezed,
     Object? lon = freezed,
+    Object? place = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -105,6 +100,10 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
               as double?,
+      place: freezed == place
+          ? _value.place
+          : place // ignore: cast_nullable_to_non_nullable
+              as Placemark?,
     ) as $Val);
   }
 }
@@ -114,7 +113,6 @@ abstract class _$$StoryImplCopyWith<$Res> implements $StoryCopyWith<$Res> {
   factory _$$StoryImplCopyWith(
           _$StoryImpl value, $Res Function(_$StoryImpl) then) =
       __$$StoryImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -124,7 +122,8 @@ abstract class _$$StoryImplCopyWith<$Res> implements $StoryCopyWith<$Res> {
       String photoUrl,
       DateTime createdAt,
       double? lat,
-      double? lon});
+      double? lon,
+      Placemark? place});
 }
 
 /// @nodoc
@@ -147,6 +146,7 @@ class __$$StoryImplCopyWithImpl<$Res>
     Object? createdAt = null,
     Object? lat = freezed,
     Object? lon = freezed,
+    Object? place = freezed,
   }) {
     return _then(_$StoryImpl(
       id: null == id
@@ -177,6 +177,10 @@ class __$$StoryImplCopyWithImpl<$Res>
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
               as double?,
+      place: freezed == place
+          ? _value.place
+          : place // ignore: cast_nullable_to_non_nullable
+              as Placemark?,
     ));
   }
 }
@@ -191,7 +195,8 @@ class _$StoryImpl extends _Story {
       required this.photoUrl,
       required this.createdAt,
       this.lat,
-      this.lon})
+      this.lon,
+      this.place})
       : super._();
 
   @override
@@ -208,10 +213,12 @@ class _$StoryImpl extends _Story {
   final double? lat;
   @override
   final double? lon;
+  @override
+  final Placemark? place;
 
   @override
   String toString() {
-    return 'Story(id: $id, name: $name, description: $description, photoUrl: $photoUrl, createdAt: $createdAt, lat: $lat, lon: $lon)';
+    return 'Story(id: $id, name: $name, description: $description, photoUrl: $photoUrl, createdAt: $createdAt, lat: $lat, lon: $lon, place: $place)';
   }
 
   @override
@@ -228,12 +235,13 @@ class _$StoryImpl extends _Story {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.lat, lat) || other.lat == lat) &&
-            (identical(other.lon, lon) || other.lon == lon));
+            (identical(other.lon, lon) || other.lon == lon) &&
+            (identical(other.place, place) || other.place == place));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, description, photoUrl, createdAt, lat, lon);
+      runtimeType, id, name, description, photoUrl, createdAt, lat, lon, place);
 
   /// Create a copy of Story
   /// with the given fields replaced by the non-null parameter values.
@@ -252,30 +260,26 @@ abstract class _Story extends Story {
       required final String photoUrl,
       required final DateTime createdAt,
       final double? lat,
-      final double? lon}) = _$StoryImpl;
-
+      final double? lon,
+      final Placemark? place}) = _$StoryImpl;
   const _Story._() : super._();
 
   @override
   String get id;
-
   @override
   String get name;
-
   @override
   String get description;
-
   @override
   String get photoUrl;
-
   @override
   DateTime get createdAt;
-
   @override
   double? get lat;
-
   @override
   double? get lon;
+  @override
+  Placemark? get place;
 
   /// Create a copy of Story
   /// with the given fields replaced by the non-null parameter values.

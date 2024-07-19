@@ -37,20 +37,20 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    final storyProvider = context.read<StoryProvider>();
+    final page = context.read<StoryProvider>().page;
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent) {
-        if (storyProvider.page != 0) {
-          storyProvider.getListStory();
+        if (page != 0) {
+          getListStory();
         }
       }
     });
     Future.microtask(() async {
       isNeedReload.addListener(() {
-        storyProvider.getListStory(reload: true);
+        getListStory(reload: true);
       });
-      storyProvider.getListStory();
+      getListStory();
     });
   }
 
@@ -58,6 +58,10 @@ class _HomePageState extends State<HomePage> {
   void dispose() {
     scrollController.dispose();
     super.dispose();
+  }
+
+  getListStory({bool? reload}) {
+    context.read<StoryProvider>().getListStory(reload: reload);
   }
 
   appBar() {
@@ -100,28 +104,31 @@ class _HomePageState extends State<HomePage> {
             return ErrorView(error: state.error);
           case DataState.hasData:
             final List<Story> list = state.list;
-            return ListView.builder(
-              controller: scrollController,
-              shrinkWrap: true,
-              itemCount: list.length + (state.page != 0 ? 1 : 0),
-              itemBuilder: (context, i) {
-                if (i == list.length) {
-                  return const Center(
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: CircularProgressIndicator(),
-                    ),
+            return RefreshIndicator(
+              onRefresh: () => getListStory(reload: true),
+              child: ListView.builder(
+                controller: scrollController,
+                shrinkWrap: true,
+                itemCount: list.length + (state.page != 0 ? 1 : 0),
+                itemBuilder: (context, i) {
+                  if (i == list.length) {
+                    return const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  return Column(
+                    children: [
+                      StoryCard(
+                        story: list[i],
+                        onCardTap: widget.onDetailStory,
+                      ),
+                    ],
                   );
-                }
-                return Column(
-                  children: [
-                    StoryCard(
-                      story: list[i],
-                      onCardTap: widget.onDetailStory,
-                    ),
-                  ],
-                );
-              },
+                },
+              ),
             );
           case DataState.noData:
             return Container();

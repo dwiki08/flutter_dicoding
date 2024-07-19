@@ -95,7 +95,9 @@ class _AddStoryPageState extends State<AddStoryPage> {
       widget.onPickLocation();
       final data = await context.read<PageManager>().waitForLatLng();
       placemark = await getPlacemark(data);
-      location = data;
+      setState(() {
+        location = data;
+      });
     }
 
     fab() {
