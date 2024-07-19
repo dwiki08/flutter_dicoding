@@ -1,27 +1,27 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+enum PageResult {
+  ok('ok'),
+  cancel('cancel');
+
+  final String value;
+
+  const PageResult(this.value);
+}
 
 class PageManager extends ChangeNotifier {
-  late Completer<String> _completerString;
-  late Completer<LatLng> _completerLatLng;
+  late Completer<({PageResult result, Object data})> _completerResult;
 
-  Future<String> waitForString() async {
-    _completerString = Completer<String>();
-    return _completerString.future;
+  Future<({PageResult result, Object data})> waitForResult() async {
+    _completerResult = Completer<({PageResult result, Object data})>();
+    return _completerResult.future.whenComplete(() {
+      _completerResult = Completer();
+    });
   }
 
-  void returnString(String value) {
-    _completerString.complete(value);
-  }
-
-  Future<LatLng> waitForLatLng() async {
-    _completerLatLng = Completer<LatLng>();
-    return _completerLatLng.future;
-  }
-
-  void returnLatLng(LatLng value) {
-    _completerLatLng.complete(value);
+  void returnResult(({PageResult result, Object data}) value) {
+    _completerResult.complete(value);
   }
 }

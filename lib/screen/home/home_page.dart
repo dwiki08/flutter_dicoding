@@ -5,9 +5,9 @@ import 'package:dicoding_flutter/components/error_view.dart';
 import 'package:dicoding_flutter/components/loading.dart';
 import 'package:dicoding_flutter/components/story_card.dart';
 import 'package:dicoding_flutter/data/model/story.dart';
-import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
 import 'package:dicoding_flutter/providers/state/data_state.dart';
 import 'package:dicoding_flutter/providers/story_provider.dart';
+import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +32,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final ScrollController scrollController = ScrollController();
-  ValueNotifier<bool> isNeedReload = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -47,9 +46,6 @@ class _HomePageState extends State<HomePage> {
       }
     });
     Future.microtask(() async {
-      isNeedReload.addListener(() {
-        getListStory(reload: true);
-      });
       getListStory();
     });
   }
@@ -60,8 +56,8 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  getListStory({bool? reload}) {
-    context.read<StoryProvider>().getListStory(reload: reload);
+  getListStory({bool? reload}) async {
+    await context.read<StoryProvider>().getListStory(reload: reload);
   }
 
   appBar() {
@@ -84,7 +80,15 @@ class _HomePageState extends State<HomePage> {
   fab() {
     final localize = AppLocalizations.of(context)!;
     return FloatingActionButton(
-      onPressed: () => widget.onAddStory(),
+      onPressed: () async {
+        widget.onAddStory();
+        final data = await context.read<PageManager>().waitForResult();
+        if (data.result == PageResult.ok) {
+          setState(() {
+            getListStory(reload: true);
+          });
+        }
+      },
       tooltip: localize.addStory,
       child: const Icon(Icons.edit),
     );
@@ -92,7 +96,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    isNeedReload.value = context.watch<ScreenReloadProvider>().homeScreen;
     return Scaffold(
       appBar: appBar(),
       floatingActionButton: fab(),
@@ -105,7 +108,9 @@ class _HomePageState extends State<HomePage> {
           case DataState.hasData:
             final List<Story> list = state.list;
             return RefreshIndicator(
-              onRefresh: () => getListStory(reload: true),
+              onRefresh: () {
+                return getListStory(reload: true);
+              },
               child: ListView.builder(
                 controller: scrollController,
                 shrinkWrap: true,

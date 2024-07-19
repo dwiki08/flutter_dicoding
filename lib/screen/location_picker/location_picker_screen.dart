@@ -1,3 +1,4 @@
+import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/components/placemark_view.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/utils/common.dart';
@@ -42,6 +43,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             },
             child: const Icon(Icons.add),
           ),
+          const SizedBox(height: defaultPadding / 2),
           FloatingActionButton.small(
             backgroundColor: Colors.white,
             heroTag: "zoom-out",
@@ -207,8 +209,8 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                   latLng: markers.first.position,
                   showChooseButton: true,
                   onChooseButton: (latLng) {
-                    context.read<PageManager>().returnLatLng(latLng);
                     widget.onPickLocation(latLng);
+                    context.read<PageManager>().returnResult((result: PageResult.ok, data: latLng));
                   },
                 ),
               ),

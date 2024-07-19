@@ -1,7 +1,6 @@
 import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/providers/auth_provider.dart';
-import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/routes/router_delegate.dart';
 import 'package:dicoding_flutter/utils/common.dart';
@@ -17,7 +16,6 @@ void main() {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => PageManager()),
-      ChangeNotifierProvider(create: (context) => ScreenReloadProvider()),
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => SettingProvider()),
     ],

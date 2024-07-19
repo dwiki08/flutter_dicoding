@@ -4,7 +4,6 @@ import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/components/custom_snackbar.dart';
 import 'package:dicoding_flutter/providers/file_picker_provider.dart';
-import 'package:dicoding_flutter/providers/screen_reload_provider.dart';
 import 'package:dicoding_flutter/providers/state/data_state.dart';
 import 'package:dicoding_flutter/providers/story_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
@@ -48,8 +47,10 @@ class _AddStoryPageState extends State<AddStoryPage> {
     final colorScheme = Theme.of(context).colorScheme;
 
     onStoryAdded() {
-      context.read<ScreenReloadProvider>().reloadHomeScreen();
       widget.onStoryAdded();
+      context
+          .read<PageManager>()
+          .returnResult((result: PageResult.ok, data: true));
     }
 
     onOpenGallery() async {
@@ -93,10 +94,11 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
     onPickLocation() async {
       widget.onPickLocation();
-      final data = await context.read<PageManager>().waitForLatLng();
-      placemark = await getPlacemark(data);
-      setState(() {
-        location = data;
+      final data = await context.read<PageManager>().waitForResult();
+      final latLng = data.data as LatLng;
+      setState(() async {
+        placemark = await getPlacemark(latLng);
+        location = latLng;
       });
     }
 

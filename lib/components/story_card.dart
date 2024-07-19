@@ -22,9 +22,7 @@ class StoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final textTheme = Theme.of(context).textTheme;
     return Container(
       padding: const EdgeInsets.all(defaultPadding / 2),
       width: double.infinity,
@@ -59,11 +57,11 @@ class StoryCard extends StatelessWidget {
                         story.formattedDate(format: 'hh.mm - d MMMM yyyy'),
                         style: textTheme.labelMedium,
                       ),
-                      if (story.place != null) Text(
-                        '${story.place?.subLocality}, ${story.place
-                            ?.locality}, ${story.place?.postalCode}, ${story
-                            .place?.country}',
-                        style: textTheme.labelMedium,),
+                      if (story.place != null)
+                        Text(
+                          '${story.place?.subLocality}, ${story.place?.locality}, ${story.place?.postalCode}, ${story.place?.country}',
+                          style: textTheme.labelMedium,
+                        ),
                       const SizedBox(height: defaultPadding / 2),
                       Text(
                         story.description,

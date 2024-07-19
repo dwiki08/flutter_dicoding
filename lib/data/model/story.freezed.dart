@@ -17,12 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Story {
   String get id => throw _privateConstructorUsedError;
+
   String get name => throw _privateConstructorUsedError;
+
   String get description => throw _privateConstructorUsedError;
+
   String get photoUrl => throw _privateConstructorUsedError;
+
   DateTime get createdAt => throw _privateConstructorUsedError;
+
   double? get lat => throw _privateConstructorUsedError;
+
   double? get lon => throw _privateConstructorUsedError;
+
   Placemark? get place => throw _privateConstructorUsedError;
 
   /// Create a copy of Story
@@ -35,6 +42,7 @@ mixin _$Story {
 abstract class $StoryCopyWith<$Res> {
   factory $StoryCopyWith(Story value, $Res Function(Story) then) =
       _$StoryCopyWithImpl<$Res, Story>;
+
   @useResult
   $Res call(
       {String id,
@@ -54,6 +62,7 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -113,6 +122,7 @@ abstract class _$$StoryImplCopyWith<$Res> implements $StoryCopyWith<$Res> {
   factory _$$StoryImplCopyWith(
           _$StoryImpl value, $Res Function(_$StoryImpl) then) =
       __$$StoryImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -262,22 +272,30 @@ abstract class _Story extends Story {
       final double? lat,
       final double? lon,
       final Placemark? place}) = _$StoryImpl;
+
   const _Story._() : super._();
 
   @override
   String get id;
+
   @override
   String get name;
+
   @override
   String get description;
+
   @override
   String get photoUrl;
+
   @override
   DateTime get createdAt;
+
   @override
   double? get lat;
+
   @override
   double? get lon;
+
   @override
   Placemark? get place;
 
