@@ -12,6 +12,8 @@ My Dicoding Flutter Submissions : [Multi-Platform App Developer](https://www.dic
 
 
 ### Belajar Pengembangan Aplikasi Flutter Intermediate
+- [Submission 1](https://github.com/dwiki08/flutter_dicoding/tree/intermediate_sub_1)
+- [Submission 2](https://github.com/dwiki08/flutter_dicoding/tree/intermediate_sub_2)
 
 
 ### Menjadi Flutter Developer Expert
