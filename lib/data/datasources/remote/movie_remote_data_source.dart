@@ -5,7 +5,7 @@ import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_model.dart';
 import 'package:ditonton/data/models/movie_response.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 abstract class MovieRemoteDataSource {
   Future<List<MovieModel>> getNowPlayingMovies();
@@ -22,7 +22,7 @@ abstract class MovieRemoteDataSource {
 }
 
 class MovieRemoteDataSourceImpl implements MovieRemoteDataSource {
-  final http.Client client;
+  final Client client;
 
   MovieRemoteDataSourceImpl({required this.client});
 

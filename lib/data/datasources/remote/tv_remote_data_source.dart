@@ -5,7 +5,7 @@ import 'package:ditonton/common/exception.dart';
 import 'package:ditonton/data/models/tv_detail_model.dart';
 import 'package:ditonton/data/models/tv_model.dart';
 import 'package:ditonton/data/models/tv_response.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 abstract class TvRemoteDataSource {
   Future<List<TvModel>> getNowPlayingTv();
@@ -22,7 +22,7 @@ abstract class TvRemoteDataSource {
 }
 
 class TvRemoteDataSourceImpl implements TvRemoteDataSource {
-  final http.Client client;
+  final Client client;
 
   TvRemoteDataSourceImpl({required this.client});
 

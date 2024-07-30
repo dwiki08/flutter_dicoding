@@ -1,8 +1,11 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
+import 'package:ditonton/domain/entities/movie.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/movie_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/movie_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/movie_top_rated_cubit.dart';
+import 'package:ditonton/presentation/widgets/filler_view.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum MovieListType { playingNow, popular, topRated }
 
@@ -36,16 +39,85 @@ class _MovieListPageState extends State<MovieListPage> {
     Future.microtask(() {
       switch (widget.movieListType) {
         case MovieListType.playingNow:
-          context.read<MovieListNotifier>().fetchNowPlayingMovies();
+          context.read<MovieNowPlayingCubit>().fetchData();
           break;
         case MovieListType.popular:
-          context.read<MovieListNotifier>().fetchPopularMovies();
+          context.read<MoviePopularCubit>().fetchData();
           break;
         case MovieListType.topRated:
-          context.read<MovieListNotifier>().fetchTopRatedMovies();
+          context.read<MovieTopRatedCubit>().fetchData();
           break;
       }
     });
+  }
+
+  _loading() {
+    return Center(child: CircularProgressIndicator());
+  }
+
+  _error(String msg) {
+    return Center(key: Key('error_message'), child: Text(msg));
+  }
+
+  _data(List<Movie> data) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        final movie = data[index];
+        return MovieCard(movie);
+      },
+      itemCount: data.length,
+    );
+  }
+
+  _initial() {
+    return FillerView();
+  }
+
+  Widget _body() {
+    switch (widget.movieListType) {
+      case MovieListType.playingNow:
+        return BlocBuilder<MovieNowPlayingCubit, MovieNowPlayingState>(
+          builder: (context, state) {
+            return state.when(loading: () {
+              return _loading();
+            }, error: (msg) {
+              return _error(msg);
+            }, data: (data) {
+              return _data(data);
+            }, initial: () {
+              return _initial();
+            });
+          },
+        );
+      case MovieListType.popular:
+        return BlocBuilder<MoviePopularCubit, MoviePopularState>(
+          builder: (context, state) {
+            return state.when(loading: () {
+              return _loading();
+            }, error: (msg) {
+              return _error(msg);
+            }, data: (data) {
+              return _data(data);
+            }, initial: () {
+              return _initial();
+            });
+          },
+        );
+      case MovieListType.topRated:
+        return BlocBuilder<MovieTopRatedCubit, MovieTopRatedState>(
+          builder: (context, state) {
+            return state.when(loading: () {
+              return _loading();
+            }, error: (msg) {
+              return _error(msg);
+            }, data: (data) {
+              return _data(data);
+            }, initial: () {
+              return _initial();
+            });
+          },
+        );
+    }
   }
 
   @override
@@ -62,44 +134,7 @@ class _MovieListPageState extends State<MovieListPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<MovieListNotifier>(
-          builder: (context, data, child) {
-            var state;
-            var list;
-            switch (widget.movieListType) {
-              case MovieListType.playingNow:
-                state = data.nowPlayingState;
-                list = data.nowPlayingMovies;
-                break;
-              case MovieListType.popular:
-                state = data.popularMoviesState;
-                list = data.popularMovies;
-                break;
-              case MovieListType.topRated:
-                state = data.topRatedMoviesState;
-                list = data.topRatedMovies;
-                break;
-            }
-            if (state == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = list[index];
-                  return MovieCard(movie);
-                },
-                itemCount: list.length,
-              );
-            } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
-        ),
+        child: _body(),
       ),
     );
   }

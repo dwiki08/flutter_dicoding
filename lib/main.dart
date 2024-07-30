@@ -1,6 +1,18 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:ditonton/presentation/bloc/movie/detail/movie_detail_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/movie_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/movie_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/search/movie_search_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/movie_top_rated_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/movie_watchlist_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/detail/tv_detail_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/now_playing/tv_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/tv_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/search/tv_search_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated/tv_top_rated_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/tv_watchlist_cubit.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/movie_detail_page.dart';
@@ -10,17 +22,20 @@ import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/pages/tv_list_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_notifier.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  di.init();
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  await di.init();
   runApp(MyApp());
 }
 
@@ -29,20 +44,41 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MoviePopularCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieTopRatedCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieNowPlayingCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieSearchCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvListNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<MovieDetailCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<MovieWatchlistCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvPopularCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvTopRatedCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvNowPlayingCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvSearchCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvDetailCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvWatchlistCubit>(),
         ),
       ],
       child: MaterialApp(

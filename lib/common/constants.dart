@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,16 +33,31 @@ final kTextTheme = TextTheme(
   bodyMedium: kBodyText,
 );
 
+// button style
+final mikadoButton = ButtonStyle(
+  backgroundColor: WidgetStateProperty.resolveWith((states) {
+    if (states.contains(WidgetState.pressed)) {
+      return kMikadoYellow.withOpacity(0.5);
+    }
+    return kMikadoYellow;
+  }),
+  shape: WidgetStateProperty.resolveWith((states) {
+    return RoundedRectangleBorder(borderRadius: BorderRadius.circular(4));
+  }),
+);
+
 const kColorScheme = ColorScheme(
   primary: kMikadoYellow,
   primaryContainer: kMikadoYellow,
   secondary: kPrussianBlue,
   secondaryContainer: kPrussianBlue,
   surface: kRichBlack,
+  background: kRichBlack,
   error: Colors.red,
   onPrimary: kRichBlack,
   onSecondary: Colors.white,
   onSurface: Colors.white,
+  onBackground: Colors.white,
   onError: Colors.white,
   brightness: Brightness.dark,
 );

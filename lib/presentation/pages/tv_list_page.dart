@@ -1,8 +1,11 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
+import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/presentation/bloc/tv/now_playing/tv_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/tv_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated/tv_top_rated_cubit.dart';
+import 'package:ditonton/presentation/widgets/filler_view.dart';
 import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum TvListType { playingNow, popular, topRated }
 
@@ -35,13 +38,13 @@ class _TvListPageState extends State<TvListPage> {
     Future.microtask(() {
       switch (widget.tvListType) {
         case TvListType.playingNow:
-          context.read<TvListNotifier>().fetchNowPlayingTv();
+          context.read<TvNowPlayingCubit>().fetchData();
           break;
         case TvListType.popular:
-          context.read<TvListNotifier>().fetchPopularTv();
+          context.read<TvPopularCubit>().fetchData();
           break;
         case TvListType.topRated:
-          context.read<TvListNotifier>().fetchTopRatedTv();
+          context.read<TvTopRatedCubit>().fetchData();
           break;
       }
     });
@@ -49,6 +52,75 @@ class _TvListPageState extends State<TvListPage> {
 
   @override
   Widget build(BuildContext context) {
+    _loading() {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    _error(String msg) {
+      return Center(key: Key('error_message'), child: Text(msg));
+    }
+
+    _data(List<Tv> data) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          final movie = data[index];
+          return TvCard(movie);
+        },
+        itemCount: data.length,
+      );
+    }
+
+    _initial() {
+      return FillerView();
+    }
+
+    Widget _body() {
+      switch (widget.tvListType) {
+        case TvListType.playingNow:
+          return BlocBuilder<TvNowPlayingCubit, TvNowPlayingState>(
+            builder: (context, state) {
+              return state.when(loading: () {
+                return _loading();
+              }, error: (msg) {
+                return _error(msg);
+              }, data: (data) {
+                return _data(data);
+              }, initial: () {
+                return _initial();
+              });
+            },
+          );
+        case TvListType.popular:
+          return BlocBuilder<TvPopularCubit, TvPopularState>(
+            builder: (context, state) {
+              return state.when(loading: () {
+                return _loading();
+              }, error: (msg) {
+                return _error(msg);
+              }, data: (data) {
+                return _data(data);
+              }, initial: () {
+                return _initial();
+              });
+            },
+          );
+        case TvListType.topRated:
+          return BlocBuilder<TvTopRatedCubit, TvTopRatedState>(
+            builder: (context, state) {
+              return state.when(loading: () {
+                return _loading();
+              }, error: (msg) {
+                return _error(msg);
+              }, data: (data) {
+                return _data(data);
+              }, initial: () {
+                return _initial();
+              });
+            },
+          );
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -61,44 +133,7 @@ class _TvListPageState extends State<TvListPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TvListNotifier>(
-          builder: (context, data, child) {
-            var state;
-            var list;
-            switch (widget.tvListType) {
-              case TvListType.playingNow:
-                state = data.nowPlayingState;
-                list = data.nowPlayingTv;
-                break;
-              case TvListType.popular:
-                state = data.popularTvState;
-                list = data.popularTv;
-                break;
-              case TvListType.topRated:
-                state = data.topRatedTvState;
-                list = data.topRatedTv;
-                break;
-            }
-            if (state == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = list[index];
-                  return TvCard(movie);
-                },
-                itemCount: list.length,
-              );
-            } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
-        ),
+        child: _body(),
       ),
     );
   }

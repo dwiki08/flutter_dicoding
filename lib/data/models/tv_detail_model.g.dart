@@ -1,5 +1,8 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// coverage:ignore-file
+
+
 part of 'tv_detail_model.dart';
 
 // **************************************************************************

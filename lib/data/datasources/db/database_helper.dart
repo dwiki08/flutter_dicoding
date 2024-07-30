@@ -1,3 +1,4 @@
+// coverage:ignore-file
 import 'dart:async';
 
 import 'package:ditonton/data/models/movie_table.dart';

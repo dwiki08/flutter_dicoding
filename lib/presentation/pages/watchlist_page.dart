@@ -1,10 +1,13 @@
-import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
-import 'package:ditonton/presentation/provider/watchlist_notifier.dart';
+import 'package:ditonton/domain/entities/movie.dart';
+import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/movie_watchlist_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/tv_watchlist_cubit.dart';
+import 'package:ditonton/presentation/widgets/filler_view.dart';
 import 'package:ditonton/presentation/widgets/movie_card_list.dart';
 import 'package:ditonton/presentation/widgets/tv_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum WatchlistType { movie, tv }
 
@@ -23,12 +26,10 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
   _fetchData() {
     switch (widget.type) {
       case WatchlistType.movie:
-        Provider.of<WatchlistNotifier>(context, listen: false)
-            .fetchWatchlistMovies();
+        context.read<MovieWatchlistCubit>().fetchData();
         break;
       case WatchlistType.tv:
-        Provider.of<WatchlistNotifier>(context, listen: false)
-            .fetchWatchlistTv();
+        context.read<TvWatchlistCubit>().fetchData();
         break;
     }
   }
@@ -53,6 +54,58 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
 
   @override
   Widget build(BuildContext context) {
+    _loading() {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    _error(String msg) {
+      return Center(
+        key: Key('error_message'),
+        child: Text(msg),
+      );
+    }
+
+    _dataMovie(List<Movie> list) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return MovieCard(list[index]);
+        },
+        itemCount: list.length,
+      );
+    }
+
+    _dataTv(List<Tv> list) {
+      return ListView.builder(
+        itemBuilder: (context, index) {
+          return TvCard(list[index]);
+        },
+        itemCount: list.length,
+      );
+    }
+
+    _body() {
+      switch (widget.type) {
+        case WatchlistType.movie:
+          return BlocBuilder<MovieWatchlistCubit, MovieWatchlistState>(
+              builder: (context, state) {
+            return state.when(
+                initial: () => FillerView(),
+                loading: () => _loading(),
+                error: (msg) => _error(msg),
+                data: (data) => _dataMovie(data));
+          });
+        case WatchlistType.tv:
+          return BlocBuilder<TvWatchlistCubit, TvWatchlistState>(
+              builder: (context, state) {
+            return state.when(
+                initial: () => FillerView(),
+                loading: () => _loading(),
+                error: (msg) => _error(msg),
+                data: (data) => _dataTv(data));
+          });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -67,45 +120,7 @@ class _WatchlistPageState extends State<WatchlistPage> with RouteAware {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<WatchlistNotifier>(
-          builder: (context, data, child) {
-            var state;
-            var list;
-            switch (widget.type) {
-              case WatchlistType.movie:
-                state = data.watchlistMovieState;
-                list = data.watchlistMovies;
-                break;
-              case WatchlistType.tv:
-                state = data.watchlistTvState;
-                list = data.watchlistTv;
-                break;
-            }
-            if (state == RequestState.Loading) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (state == RequestState.Loaded) {
-              return ListView.builder(
-                itemBuilder: (context, index) {
-                  final movie = list[index];
-                  switch (widget.type) {
-                    case WatchlistType.movie:
-                      return MovieCard(movie);
-                    case WatchlistType.tv:
-                      return TvCard(movie);
-                  }
-                },
-                itemCount: list.length,
-              );
-            } else {
-              return Center(
-                key: Key('error_message'),
-                child: Text(data.message),
-              );
-            }
-          },
-        ),
+        child: _body(),
       ),
     );
   }

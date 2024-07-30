@@ -1,43 +1,54 @@
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/entities/tv.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/movie_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/movie_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/movie_top_rated_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/now_playing/tv_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/tv_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated/tv_top_rated_cubit.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/movie_list_page.dart';
 import 'package:ditonton/presentation/pages/search_movie_page.dart';
 import 'package:ditonton/presentation/pages/search_tv_page.dart';
 import 'package:ditonton/presentation/pages/tv_list_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_list_notifier.dart';
+import 'package:ditonton/presentation/widgets/filler_view.dart';
 import 'package:ditonton/presentation/widgets/movie_list.dart';
 import 'package:ditonton/presentation/widgets/tv_list.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 enum SelectedSection { movie, tv }
 
 class HomeMoviePage extends StatefulWidget {
+  const HomeMoviePage(
+      {super.key, this.selectedSection = SelectedSection.movie});
+
   @override
   _HomeMoviePageState createState() => _HomeMoviePageState();
+
+  final selectedSection;
 }
 
 class _HomeMoviePageState extends State<HomeMoviePage> {
-  SelectedSection selectedSection = SelectedSection.movie;
+  var _s;
+
+  selectedSection({SelectedSection? section = null}) {
+    if (section != null) _s = section;
+    return _s ?? widget.selectedSection;
+  }
 
   void getData() {
-    switch (selectedSection) {
+    switch (selectedSection()) {
       case SelectedSection.movie:
-        Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies();
+        context.read<MoviePopularCubit>().fetchData();
+        context.read<MovieNowPlayingCubit>().fetchData();
+        context.read<MovieTopRatedCubit>().fetchData();
         break;
       case SelectedSection.tv:
-        Provider.of<TvListNotifier>(context, listen: false)
-          ..fetchNowPlayingTv()
-          ..fetchPopularTv()
-          ..fetchTopRatedTv();
+        context.read<TvPopularCubit>().fetchData();
+        context.read<TvNowPlayingCubit>().fetchData();
+        context.read<TvTopRatedCubit>().fetchData();
         break;
     }
   }
@@ -50,10 +61,11 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
 
   @override
   Widget build(BuildContext context) {
-    final tileMovieColors =
-        selectedSection == SelectedSection.movie ? kMikadoYellow : Colors.white;
+    final tileMovieColors = selectedSection() == SelectedSection.movie
+        ? kMikadoYellow
+        : Colors.white;
     final tileTvColors =
-        selectedSection == SelectedSection.tv ? kMikadoYellow : Colors.white;
+        selectedSection() == SelectedSection.tv ? kMikadoYellow : Colors.white;
 
     return Scaffold(
       drawer: Drawer(
@@ -67,26 +79,28 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               accountEmail: Text('ditonton@dicoding.com'),
             ),
             ListTile(
+              key: Key('select_movie'),
               leading: Icon(Icons.movie),
               title: Text('Movies'),
               textColor: tileMovieColors,
               iconColor: tileMovieColors,
               onTap: () {
                 setState(() {
-                  selectedSection = SelectedSection.movie;
+                  selectedSection(section: SelectedSection.movie);
                   getData();
                 });
                 Navigator.pop(context);
               },
             ),
             ListTile(
+              key: Key('select_tv'),
               leading: Icon(Icons.tv),
               title: Text('TV'),
               textColor: tileTvColors,
               iconColor: tileTvColors,
               onTap: () {
                 setState(() {
-                  selectedSection = SelectedSection.tv;
+                  selectedSection(section: SelectedSection.tv);
                   getData();
                 });
                 Navigator.pop(context);
@@ -103,13 +117,15 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         ),
       ),
       appBar: AppBar(
-        title: Text(
-            selectedSection == SelectedSection.movie ? 'Movies' : 'TV Series'),
+        key: Key('app_bar'),
+        title: Text(selectedSection() == SelectedSection.movie
+            ? 'Movies'
+            : 'TV Series'),
         actions: [
           IconButton(
             onPressed: () {
               var args;
-              switch (selectedSection) {
+              switch (selectedSection()) {
                 case SelectedSection.movie:
                   args = WatchlistType.movie;
                   break;
@@ -125,7 +141,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
           ),
           IconButton(
             onPressed: () {
-              switch (selectedSection) {
+              switch (selectedSection()) {
                 case SelectedSection.movie:
                   Navigator.pushNamed(context, SearchMoviePage.ROUTE_NAME);
                   break;
@@ -147,7 +163,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
               _buildSubHeading(
                 title: 'Now Playing',
                 onTap: () {
-                  switch (selectedSection) {
+                  switch (selectedSection()) {
                     case SelectedSection.movie:
                       Navigator.pushNamed(context, MovieListPage.ROUTE_NAME,
                           arguments: MovieListType.playingNow);
@@ -159,20 +175,37 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   }
                 },
               ),
-              selectedSection == SelectedSection.movie
-                  ? Consumer<MovieListNotifier>(
-                      builder: (context, data, child) {
-                      return _listMovieSection(
-                          data.nowPlayingState, data.nowPlayingMovies);
+              selectedSection() == SelectedSection.movie
+                  ? BlocBuilder<MovieNowPlayingCubit, MovieNowPlayingState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return MovieList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     })
-                  : Consumer<TvListNotifier>(builder: (context, data, child) {
-                      return _listTvSection(
-                          data.nowPlayingState, data.nowPlayingTv);
+                  : BlocBuilder<TvNowPlayingCubit, TvNowPlayingState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return TvList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     }),
               _buildSubHeading(
                 title: 'Popular',
                 onTap: () {
-                  switch (selectedSection) {
+                  switch (selectedSection()) {
                     case SelectedSection.movie:
                       Navigator.pushNamed(context, MovieListPage.ROUTE_NAME,
                           arguments: MovieListType.popular);
@@ -184,70 +217,80 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                   }
                 },
               ),
-              selectedSection == SelectedSection.movie
-                  ? Consumer<MovieListNotifier>(
-                      builder: (context, data, child) {
-                      return _listMovieSection(
-                          data.popularMoviesState, data.popularMovies);
+              selectedSection() == SelectedSection.movie
+                  ? BlocBuilder<MoviePopularCubit, MoviePopularState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return MovieList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     })
-                  : Consumer<TvListNotifier>(builder: (context, data, child) {
-                      return _listTvSection(
-                          data.popularTvState, data.popularTv);
+                  : BlocBuilder<TvPopularCubit, TvPopularState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return TvList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     }),
               _buildSubHeading(
                 title: 'Top Rated',
                 onTap: () {
-                  switch (selectedSection) {
+                  switch (selectedSection()) {
                     case SelectedSection.movie:
                       Navigator.pushNamed(context, MovieListPage.ROUTE_NAME,
                           arguments: MovieListType.topRated);
                       break;
                     case SelectedSection.tv:
                       Navigator.pushNamed(context, TvListPage.ROUTE_NAME,
-                          arguments: TvListType.playingNow);
+                          arguments: TvListType.topRated);
                       break;
                   }
                 },
               ),
-              selectedSection == SelectedSection.movie
-                  ? Consumer<MovieListNotifier>(
-                      builder: (context, data, child) {
-                      return _listMovieSection(
-                          data.topRatedMoviesState, data.topRatedMovies);
+              selectedSection() == SelectedSection.movie
+                  ? BlocBuilder<MovieTopRatedCubit, MovieTopRatedState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return MovieList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     })
-                  : Consumer<TvListNotifier>(builder: (context, data, child) {
-                      return _listTvSection(
-                          data.topRatedTvState, data.topRatedTv);
+                  : BlocBuilder<TvTopRatedCubit, TvTopRatedState>(
+                      builder: (context, state) {
+                      return state.when(loading: () {
+                        return Center(child: CircularProgressIndicator());
+                      }, error: (msg) {
+                        return Center(
+                            key: Key('error_message'), child: Text(msg));
+                      }, data: (data) {
+                        return TvList(data);
+                      }, initial: () {
+                        return FillerView();
+                      });
                     }),
             ],
           ),
         ),
       ),
     );
-  }
-
-  Widget _listMovieSection(RequestState state, List<Movie> movies) {
-    if (state == RequestState.Loading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (state == RequestState.Loaded) {
-      return MovieList(movies);
-    } else {
-      return Text('Failed');
-    }
-  }
-
-  Widget _listTvSection(RequestState state, List<Tv> movies) {
-    if (state == RequestState.Loading) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (state == RequestState.Loaded) {
-      return TvList(movies);
-    } else {
-      return Text('Failed');
-    }
   }
 
   Row _buildSubHeading({required String title, required Function() onTap}) {

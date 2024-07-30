@@ -1,5 +1,6 @@
 import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/datasources/local/movie_local_data_source.dart';
+import 'package:ditonton/data/datasources/remote/custom_http_client.dart';
 import 'package:ditonton/data/datasources/remote/movie_remote_data_source.dart';
 import 'package:ditonton/data/datasources/remote/tv_remote_data_source.dart';
 import 'package:ditonton/data/repositories/movie_repository_impl.dart';
@@ -26,59 +27,66 @@ import 'package:ditonton/domain/usecases/tv/get_watchlist_tv.dart';
 import 'package:ditonton/domain/usecases/tv/remove_watchlist.dart';
 import 'package:ditonton/domain/usecases/tv/save_watchlist.dart';
 import 'package:ditonton/domain/usecases/tv/search_tv.dart';
-import 'package:ditonton/presentation/provider/movie_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/watchlist_notifier.dart';
+import 'package:ditonton/presentation/bloc/movie/detail/movie_detail_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/now_playing/movie_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/popular/movie_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/search/movie_search_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/top_rated/movie_top_rated_cubit.dart';
+import 'package:ditonton/presentation/bloc/movie/watchlist/movie_watchlist_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/detail/tv_detail_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/now_playing/tv_now_playing_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/popular/tv_popular_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/search/tv_search_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/top_rated/tv_top_rated_cubit.dart';
+import 'package:ditonton/presentation/bloc/tv/watchlist/tv_watchlist_cubit.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
-
-import 'presentation/provider/tv_list_notifier.dart';
+import 'package:http/http.dart';
 
 final locator = GetIt.instance;
 
-void init() {
-  // provider
+Future<void> init() async {
+  // external
+  locator.registerLazySingleton(() => sslPinningClient());
+
+  // data sources
+  locator.registerLazySingletonAsync<MovieRemoteDataSource>(() async =>
+      MovieRemoteDataSourceImpl(client: await locator<Future<Client>>()));
+  locator.registerLazySingletonAsync<TvRemoteDataSource>(() async =>
+      TvRemoteDataSourceImpl(client: await locator<Future<Client>>()));
+  locator.registerLazySingleton<MovieLocalDataSource>(
+      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
+
+  await locator.isReady<MovieRemoteDataSource>();
+  await locator.isReady<TvRemoteDataSource>();
+
+  // cubit
+  locator.registerFactory(() => MoviePopularCubit(getPopularMovies: locator()));
   locator.registerFactory(
-    () => MovieListNotifier(
-      getNowPlayingMovies: locator(),
-      getPopularMovies: locator(),
-      getTopRatedMovies: locator(),
-      getSearchMovies: locator(),
-    ),
-  );
+      () => MovieNowPlayingCubit(getNowPlayingMovies: locator()));
+  locator
+      .registerFactory(() => MovieTopRatedCubit(getTopRatedMovies: locator()));
+  locator.registerFactory(() => MovieSearchCubit(searchMovies: locator()));
+  locator.registerFactory(() => MovieDetailCubit(
+        getMovieDetail: locator(),
+        getMovieRecommendations: locator(),
+        getMovieWatchListStatus: locator(),
+        saveMovieWatchlist: locator(),
+        removeMovieWatchlist: locator(),
+      ));
   locator.registerFactory(
-    () => MovieDetailNotifier(
-      getMovieDetail: locator(),
-      getMovieRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvDetailNotifier(
+      () => MovieWatchlistCubit(getWatchlistMovies: locator()));
+
+  locator.registerFactory(() => TvPopularCubit(getPopularTv: locator()));
+  locator.registerFactory(() => TvNowPlayingCubit(getNowPlayingTv: locator()));
+  locator.registerFactory(() => TvTopRatedCubit(getTopRatedTv: locator()));
+  locator.registerFactory(() => TvSearchCubit(searchTv: locator()));
+  locator.registerFactory(() => TvDetailCubit(
       getTvDetail: locator(),
       getTvRecommendations: locator(),
-      getWatchListStatus: locator(),
-      saveWatchlist: locator(),
-      removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => WatchlistNotifier(
-      getWatchlistMovies: locator(),
-      getWatchlistTv: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => TvListNotifier(
-      getNowPlayingTv: locator(),
-      getPopularTv: locator(),
-      getTopRatedTv: locator(),
-      getSearchTv: locator(),
-    ),
-  );
+      getTvWatchListStatus: locator(),
+      saveTvWatchlist: locator(),
+      removeTvWatchlist: locator()));
+  locator.registerFactory(() => TvWatchlistCubit(getWatchlistTv: locator()));
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));
@@ -117,17 +125,6 @@ void init() {
     ),
   );
 
-  // data sources
-  locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
-  locator.registerLazySingleton<TvRemoteDataSource>(
-      () => TvRemoteDataSourceImpl(client: locator()));
-  locator.registerLazySingleton<MovieLocalDataSource>(
-      () => MovieLocalDataSourceImpl(databaseHelper: locator()));
-
   // helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
-
-  // external
-  locator.registerLazySingleton(() => http.Client());
 }

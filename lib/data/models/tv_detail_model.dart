@@ -3,8 +3,8 @@ import 'package:ditonton/domain/entities/genre.dart';
 import 'package:ditonton/domain/entities/tv.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'tv_detail_model.g.dart';
 part 'tv_detail_model.freezed.dart';
+part 'tv_detail_model.g.dart';
 
 @freezed
 class TvDetailResponse with _$TvDetailResponse {
