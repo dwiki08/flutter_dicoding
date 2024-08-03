@@ -1,0 +1,27 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/path",
+      "genre_ids": [
+        1
+      ],
+      "id": 2637,
+      "origin_country": [
+        "GB"
+      ],
+      "original_language": "en",
+      "original_name": "Come Dine with Me",
+      "overview": "Amateur chefs.",
+      "popularity": 3539.203,
+      "poster_path": "/poster",
+      "first_air_date": "2005-01-10",
+      "name": "Come Dine with Me",
+      "vote_average": 4.8,
+      "vote_count": 29
+    }
+  ],
+  "total_pages": 10,
+  "total_results": 100
+}
