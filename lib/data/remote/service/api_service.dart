@@ -10,17 +10,17 @@ part 'api_service.chopper.dart';
 abstract class ApiService extends ChopperService {
   static ApiService create([ChopperClient? client]) => _$ApiService(client);
 
-  @Get(path: '/list')
+  @GET(path: '/list')
   Future<Response<RestaurantListResponse>> getRestaurants();
 
-  @Get(path: '/detail/{id}')
+  @GET(path: '/detail/{id}')
   Future<Response<RestaurantDetailResponse>> getRestaurant(
       @Path('id') String id);
 
-  @Get(path: '/search')
+  @GET(path: '/search')
   Future<Response<RestaurantListResponse>> searchRestaurants(
       @Query('q') String query);
 
-  @Post(path: '/review')
+  @POST(path: '/review')
   Future<Response<GeneralResponse>> addReview(@Body() AddReviewRequest body);
 }

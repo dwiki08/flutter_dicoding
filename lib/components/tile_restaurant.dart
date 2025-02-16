@@ -25,7 +25,7 @@ class TileRestaurant extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Card(
-              clipBehavior: Clip.antiAlias,
+              clipBehavior: Clip.hardEdge,
               elevation: 4,
               child: Image.network(
                 networkImageUrl(restaurant.pictureId, ImageRes.small),
