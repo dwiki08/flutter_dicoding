@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: ^3.7.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -39,7 +39,11 @@ dependencies:
   chopper: ^8.0.0
   either_dart: ^1.0.0
   shared_preferences: ^2.2.3
-  workmanager: ^0.5.2
+  workmanager:
+    git:
+      url: https://github.com/fluttercommunity/flutter_workmanager.git
+      path: workmanager
+      ref: main
   rxdart: ^0.28.0
   intl: ^0.19.0
   flutter_local_notifications: ^18.0.1
