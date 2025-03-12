@@ -21,12 +21,7 @@ final class _$ApiService extends ApiService {
   Future<Response<GeneralResponse>> postRegister(RegisterRequest body) {
     final Uri $url = Uri.parse('/register');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<GeneralResponse, GeneralResponse>($request);
   }
 
@@ -34,12 +29,7 @@ final class _$ApiService extends ApiService {
   Future<Response<LoginResponse>> postLogin(LoginRequest body) {
     final Uri $url = Uri.parse('/login');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<LoginResponse, LoginResponse>($request);
   }
 
@@ -67,17 +57,14 @@ final class _$ApiService extends ApiService {
   @override
   Future<Response<DetailStoryResponse>> getDetailStory(String id) {
     final Uri $url = Uri.parse('/stories/${id}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
-    );
+    final Request $request = Request('GET', $url, client.baseUrl);
     return client.send<DetailStoryResponse, DetailStoryResponse>($request);
   }
 
   @override
   Future<Response<GeneralResponse>> postStory(
-      List<PartValue<dynamic>> requestParams) {
+    List<PartValue<dynamic>> requestParams,
+  ) {
     final Uri $url = Uri.parse('/stories');
     final Map<String, String> $headers = {
       'Content-Type': 'multipart/form-data',

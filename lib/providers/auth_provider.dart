@@ -36,39 +36,51 @@ class AuthProvider extends ChangeNotifier {
     _state = DataState.isLoading;
     notifyListeners();
     await Future.delayed(const Duration(seconds: 2));
-    final result =
-        await _remoteDataSource.login(email: email, password: password);
+    final result = await _remoteDataSource.login(
+      email: email,
+      password: password,
+    );
     result.mapAsync((token) async {
       await _localDataSource.setAuthToken(token);
     });
-    result.fold((e) {
-      _state = DataState.error;
-      _error = e;
-      _isLoggedIn = false;
-    }, (_) {
-      _state = DataState.hasData;
-      _isLoggedIn = true;
-    });
+    result.fold(
+      (e) {
+        _state = DataState.error;
+        _error = e;
+        _isLoggedIn = false;
+      },
+      (_) {
+        _state = DataState.hasData;
+        _isLoggedIn = true;
+      },
+    );
     notifyListeners();
   }
 
-  Future<void> register(
-      {required String name,
-      required String email,
-      required String password}) async {
+  Future<void> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     _state = DataState.isLoading;
     notifyListeners();
     await Future.delayed(const Duration(seconds: 2));
     final result = await _remoteDataSource.register(
-        name: name, email: email, password: password);
-    result.fold((e) {
-      _isRegister = false;
-      _state = DataState.error;
-      _error = e;
-    }, (_) {
-      _isRegister = true;
-      _state = DataState.hasData;
-    });
+      name: name,
+      email: email,
+      password: password,
+    );
+    result.fold(
+      (e) {
+        _isRegister = false;
+        _state = DataState.error;
+        _error = e;
+      },
+      (_) {
+        _isRegister = true;
+        _state = DataState.hasData;
+      },
+    );
     notifyListeners();
   }
 

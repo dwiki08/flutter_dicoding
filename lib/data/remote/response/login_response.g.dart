@@ -10,10 +10,12 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       error: json['error'] as bool?,
       message: json['message'] as String?,
-      loginResult: json['loginResult'] == null
-          ? null
-          : LoginResultResponse.fromJson(
-              json['loginResult'] as Map<String, dynamic>),
+      loginResult:
+          json['loginResult'] == null
+              ? null
+              : LoginResultResponse.fromJson(
+                json['loginResult'] as Map<String, dynamic>,
+              ),
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
@@ -31,9 +33,9 @@ LoginResultResponse _$LoginResultResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$LoginResultResponseToJson(
-        LoginResultResponse instance) =>
-    <String, dynamic>{
-      'userId': instance.userId,
-      'name': instance.name,
-      'token': instance.token,
-    };
+  LoginResultResponse instance,
+) => <String, dynamic>{
+  'userId': instance.userId,
+  'name': instance.name,
+  'token': instance.token,
+};

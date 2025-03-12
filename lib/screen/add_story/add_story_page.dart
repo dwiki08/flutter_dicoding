@@ -17,8 +17,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddStoryPage extends StatefulWidget {
-  const AddStoryPage(
-      {super.key, required this.onStoryAdded, required this.onPickLocation});
+  const AddStoryPage({
+    super.key,
+    required this.onStoryAdded,
+    required this.onPickLocation,
+  });
 
   final Function() onStoryAdded;
   final Function() onPickLocation;
@@ -48,9 +51,10 @@ class _AddStoryPageState extends State<AddStoryPage> {
 
     onStoryAdded() {
       widget.onStoryAdded();
-      context
-          .read<PageManager>()
-          .returnResult((result: PageResult.ok, data: true));
+      context.read<PageManager>().returnResult((
+        result: PageResult.ok,
+        data: true,
+      ));
     }
 
     onOpenGallery() async {
@@ -109,14 +113,17 @@ class _AddStoryPageState extends State<AddStoryPage> {
           return FloatingActionButton(
             onPressed: () async {
               if (filePath == null || _storyTextController.text.isEmpty) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(defaultSnackBar(localize.dialogFillStory));
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(defaultSnackBar(localize.dialogFillStory));
                 return;
               } else {
                 if (state.state != DataState.isLoading) {
-                  await context
-                      .read<StoryProvider>()
-                      .addStory(_storyTextController.text, filePath!, location);
+                  await context.read<StoryProvider>().addStory(
+                    _storyTextController.text,
+                    filePath!,
+                    location,
+                  );
                   if (state.storyAdded) {
                     onStoryAdded();
                   }
@@ -124,42 +131,43 @@ class _AddStoryPageState extends State<AddStoryPage> {
               }
             },
             tooltip: localize.send,
-            child: state.state == DataState.isLoading
-                ? const CircularProgressIndicator()
-                : const Icon(Icons.send),
+            child:
+                state.state == DataState.isLoading
+                    ? const CircularProgressIndicator()
+                    : const Icon(Icons.send),
           );
         },
       );
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localize.addStory),
-      ),
+      appBar: AppBar(title: Text(localize.addStory)),
       floatingActionButton: fab(),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Consumer<FilePickerProvider>(builder: (context, state, child) {
-              if (state.imagePath == null) {
-                return Image.asset(
-                  assetsRaw('placeholder.png'),
-                  height: 200,
-                  width: size.width,
-                  fit: BoxFit.fitWidth,
-                );
-              } else {
-                return kIsWeb
-                    ? Image.network(
+            Consumer<FilePickerProvider>(
+              builder: (context, state, child) {
+                if (state.imagePath == null) {
+                  return Image.asset(
+                    assetsRaw('placeholder.png'),
+                    height: 200,
+                    width: size.width,
+                    fit: BoxFit.fitWidth,
+                  );
+                } else {
+                  return kIsWeb
+                      ? Image.network(
                         state.imagePath.toString(),
                         fit: BoxFit.fitWidth,
                       )
-                    : Image.file(
+                      : Image.file(
                         File(state.imagePath.toString()),
                         fit: BoxFit.contain,
                       );
-              }
-            }),
+                }
+              },
+            ),
             const SizedBox(height: defaultPadding * 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -187,37 +195,36 @@ class _AddStoryPageState extends State<AddStoryPage> {
             if (placemark != null)
               Container(
                 decoration: BoxDecoration(
-                    border: Border.all(color: colorScheme.onPrimary, width: 2),
-                    borderRadius: BorderRadius.circular(4)),
+                  border: Border.all(color: colorScheme.onPrimary, width: 2),
+                  borderRadius: BorderRadius.circular(4),
+                ),
                 margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
                 padding: const EdgeInsets.all(defaultPadding / 2),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
-                      placemark!.street!,
-                      style: textTheme.labelLarge,
-                    ),
+                    Text(placemark!.street!, style: textTheme.labelLarge),
                     Text(
                       '${placemark!.subLocality}, ${placemark!.locality}, ${placemark!.postalCode}, ${placemark!.country}',
                       style: textTheme.labelMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                    )
+                    ),
                   ],
                 ),
               ),
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: TextField(
-                  controller: _storyTextController,
-                  maxLines: 5,
-                  keyboardType: TextInputType.multiline,
-                  style: textTheme.bodyMedium,
-                  decoration: InputDecoration(
-                    hintText: localize.writeStoryHint,
-                    border: const OutlineInputBorder(),
-                  )),
+                controller: _storyTextController,
+                maxLines: 5,
+                keyboardType: TextInputType.multiline,
+                style: textTheme.bodyMedium,
+                decoration: InputDecoration(
+                  hintText: localize.writeStoryHint,
+                  border: const OutlineInputBorder(),
+                ),
+              ),
             ),
             const SizedBox(height: 100),
           ],

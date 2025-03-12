@@ -28,23 +28,25 @@ class DropdownFlags extends StatelessWidget {
       return null;
     }
 
-    return Consumer<SettingProvider>(builder: (context, state, child) {
-      final lang = state.locale.languageCode;
-      return DropdownButtonHideUnderline(
-        child: DropdownButton(
-          icon: getFlag(lang),
-          items: AppLocalizations.supportedLocales.map((Locale locale) {
-            return DropdownMenuItem(
-              value: locale,
-              child: Center(
-                child: getFlag(locale.languageCode),
-              ),
-              onTap: () => context.read<SettingProvider>().setLocale(locale),
-            );
-          }).toList(),
-          onChanged: (_) {},
-        ),
-      );
-    });
+    return Consumer<SettingProvider>(
+      builder: (context, state, child) {
+        final lang = state.locale.languageCode;
+        return DropdownButtonHideUnderline(
+          child: DropdownButton(
+            icon: getFlag(lang),
+            items:
+                AppLocalizations.supportedLocales.map((Locale locale) {
+                  return DropdownMenuItem(
+                    value: locale,
+                    child: Center(child: getFlag(locale.languageCode)),
+                    onTap:
+                        () => context.read<SettingProvider>().setLocale(locale),
+                  );
+                }).toList(),
+            onChanged: (_) {},
+          ),
+        );
+      },
+    );
   }
 }

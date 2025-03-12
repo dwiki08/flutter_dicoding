@@ -13,11 +13,7 @@ class DetailStoryResponse {
   @JsonKey(name: "story")
   StoryResponse? story;
 
-  DetailStoryResponse({
-    this.error,
-    this.message,
-    this.story,
-  });
+  DetailStoryResponse({this.error, this.message, this.story});
 
   factory DetailStoryResponse.fromJson(Map<String, dynamic> json) =>
       _$DetailStoryResponseFromJson(json);

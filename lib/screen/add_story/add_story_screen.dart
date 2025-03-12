@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddStoryScreen extends StatelessWidget {
-  const AddStoryScreen(
-      {super.key, required this.onStoryAdded, required this.onPickLocation});
+  const AddStoryScreen({
+    super.key,
+    required this.onStoryAdded,
+    required this.onPickLocation,
+  });
 
   final Function() onStoryAdded;
   final Function() onPickLocation;

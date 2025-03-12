@@ -13,11 +13,7 @@ class ListStoryResponse {
   @JsonKey(name: "listStory")
   List<StoryResponse>? listStory;
 
-  ListStoryResponse({
-    this.error,
-    this.message,
-    this.listStory,
-  });
+  ListStoryResponse({this.error, this.message, this.listStory});
 
   factory ListStoryResponse.fromJson(Map<String, dynamic> json) =>
       _$ListStoryResponseFromJson(json);

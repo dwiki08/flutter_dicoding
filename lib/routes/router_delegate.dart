@@ -39,111 +39,108 @@ class MyRouterDelegate extends RouterDelegate
   LatLng? onMapViewer;
 
   List<Page> get _splashStack => const [
-        MaterialPage(
-          key: ValueKey(RouteKey.splash),
-          child: SplashScreen(),
-        ),
-      ];
+    MaterialPage(key: ValueKey(RouteKey.splash), child: SplashScreen()),
+  ];
 
   List<Page> get _loggedOutStack => [
-        MaterialPage(
-          key: const ValueKey(RouteKey.login),
-          child: LoginScreen(
-            toRegister: () {
-              mainScreen = RouteKey.register;
-              notifyListeners();
-            },
-            onLoggedIn: (isLoggedIn) {
-              this.isLoggedIn = isLoggedIn;
-              notifyListeners();
-            },
-          ),
+    MaterialPage(
+      key: const ValueKey(RouteKey.login),
+      child: LoginScreen(
+        toRegister: () {
+          mainScreen = RouteKey.register;
+          notifyListeners();
+        },
+        onLoggedIn: (isLoggedIn) {
+          this.isLoggedIn = isLoggedIn;
+          notifyListeners();
+        },
+      ),
+    ),
+    if (mainScreen == RouteKey.register)
+      MaterialPage(
+        key: const ValueKey(RouteKey.register),
+        child: RegisterScreen(
+          toLogin: () {
+            mainScreen = RouteKey.login;
+            notifyListeners();
+          },
         ),
-        if (mainScreen == RouteKey.register)
-          MaterialPage(
-            key: const ValueKey(RouteKey.register),
-            child: RegisterScreen(
-              toLogin: () {
-                mainScreen = RouteKey.login;
-                notifyListeners();
-              },
-            ),
-          ),
-      ];
+      ),
+  ];
 
   List<Page> get _loggedInStack => [
-        MaterialPage(
-          key: const ValueKey(RouteKey.home),
-          child: HomeScreen(
-            onLogout: (isLoggedIn) {
-              this.isLoggedIn = isLoggedIn;
-              notifyListeners();
-            },
-            onDetailStory: (storyId) {
-              this.storyId = storyId;
-              notifyListeners();
-            },
-            onAddStory: () {
-              onAddStory = true;
-              notifyListeners();
-            },
-            onDialogLogout: () {
-              onLogoutDialog = true;
-              notifyListeners();
-            },
-          ),
-        ),
-        if (storyId != null)
-          MaterialPage(
-            key: ValueKey(RouteKey.story + storyId!),
-            child: StoryScreen(
-              id: storyId!,
-              onMapView: (LatLng latLng) {
-                onMapViewer = latLng;
-                notifyListeners();
-              },
-            ),
-          ),
-        if (onAddStory == true)
-          MaterialPage(
-            key: const ValueKey(RouteKey.addStory),
-            child: AddStoryScreen(
-              onStoryAdded: () {
-                onAddStory = false;
-                notifyListeners();
-              },
-              onPickLocation: () {
-                onLocationPicker = true;
-                notifyListeners();
-              },
-            ),
-          ),
-        if (onLocationPicker == true)
-          MaterialPage(
-            key: const ValueKey(RouteKey.locationPicker),
-            child: LocationPickerScreen(
-              onPickLocation: (LatLng latLng) {
-                onLocationPicker = false;
-                notifyListeners();
-              },
-            ),
-          ),
-        if (onMapViewer != null)
-          MaterialPage(
-            key: const ValueKey(RouteKey.addStory),
-            child: MapViewerScreen(
-              latLng: onMapViewer!,
-            ),
-          ),
-        if (onLogoutDialog == true)
-          LogoutDialog(onLogout: (bool isLoggedOut) {
-            onLogoutDialog = false;
-            if (isLoggedOut) {
-              isLoggedIn = false;
-            }
+    MaterialPage(
+      key: const ValueKey(RouteKey.home),
+      child: HomeScreen(
+        onLogout: (isLoggedIn) {
+          this.isLoggedIn = isLoggedIn;
+          notifyListeners();
+        },
+        onDetailStory: (storyId) {
+          this.storyId = storyId;
+          notifyListeners();
+        },
+        onAddStory: () {
+          onAddStory = true;
+          notifyListeners();
+        },
+        onDialogLogout: () {
+          onLogoutDialog = true;
+          notifyListeners();
+        },
+      ),
+    ),
+    if (storyId != null)
+      MaterialPage(
+        key: ValueKey(RouteKey.story + storyId!),
+        child: StoryScreen(
+          id: storyId!,
+          onMapView: (LatLng latLng) {
+            onMapViewer = latLng;
             notifyListeners();
-          }),
-      ];
+          },
+        ),
+      ),
+    if (onAddStory == true)
+      MaterialPage(
+        key: const ValueKey(RouteKey.addStory),
+        child: AddStoryScreen(
+          onStoryAdded: () {
+            onAddStory = false;
+            notifyListeners();
+          },
+          onPickLocation: () {
+            onLocationPicker = true;
+            notifyListeners();
+          },
+        ),
+      ),
+    if (onLocationPicker == true)
+      MaterialPage(
+        key: const ValueKey(RouteKey.locationPicker),
+        child: LocationPickerScreen(
+          onPickLocation: (LatLng latLng) {
+            onLocationPicker = false;
+            notifyListeners();
+          },
+        ),
+      ),
+    if (onMapViewer != null)
+      MaterialPage(
+        key: const ValueKey(RouteKey.addStory),
+        child: MapViewerScreen(latLng: onMapViewer!),
+      ),
+    if (onLogoutDialog == true)
+      LogoutDialog(
+        onLogout: (bool isLoggedOut) {
+          onLogoutDialog = false;
+          if (isLoggedOut) {
+            isLoggedIn = false;
+          }
+          notifyListeners();
+        },
+      ),
+  ];
 
   onBack() {
     if (onMapViewer == null) storyId = null;

@@ -9,10 +9,7 @@ class GeneralResponse {
   @JsonKey(name: "message")
   String? message;
 
-  GeneralResponse({
-    this.error,
-    this.message,
-  });
+  GeneralResponse({this.error, this.message});
 
   factory GeneralResponse.fromJson(Map<String, dynamic> json) =>
       _$GeneralResponseFromJson(json);

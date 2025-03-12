@@ -31,15 +31,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     doRegister() async {
       await context.read<AuthProvider>().register(
-            name: _nameTextController.text,
-            email: _emailTextController.text,
-            password: _passwordTextController.text,
-          );
+        name: _nameTextController.text,
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
     }
 
     onRegisterSuccess() {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(defaultSnackBar(localize.registerSuccess));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(defaultSnackBar(localize.registerSuccess));
       widget.toLogin();
     }
 
@@ -63,10 +64,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         keyboardType: TextInputType.name,
         textInputAction: TextInputAction.next,
         decoration: textFieldDecoration(
-            context: context,
-            icon: const Icon(Icons.person_outline),
-            label: localize.name,
-            hint: localize.name),
+          context: context,
+          icon: const Icon(Icons.person_outline),
+          label: localize.name,
+          hint: localize.name,
+        ),
       );
     }
 
@@ -77,10 +79,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
         decoration: textFieldDecoration(
-            context: context,
-            icon: const Icon(Icons.email_outlined),
-            label: localize.email,
-            hint: localize.emailHint),
+          context: context,
+          icon: const Icon(Icons.email_outlined),
+          label: localize.email,
+          hint: localize.emailHint,
+        ),
       );
     }
 
@@ -102,9 +105,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 _hidePassword = !_hidePassword;
               });
             },
-            icon: _hidePassword
-                ? const Icon(Icons.visibility_off)
-                : const Icon(Icons.visibility),
+            icon:
+                _hidePassword
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
           ),
         ),
       );
@@ -115,17 +119,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(defaultCircularRadius),
-              ),
-              minimumSize: const Size(100, 42)),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(defaultCircularRadius),
+            ),
+            minimumSize: const Size(100, 42),
+          ),
           onPressed: () async {
             if (state.state != DataState.isLoading) await doRegister();
             if (state.isRegister == true) onRegisterSuccess();
           },
-          child: state.state == DataState.isLoading
-              ? const LinearProgressIndicator()
-              : Text(localize.register),
+          child:
+              state.state == DataState.isLoading
+                  ? const LinearProgressIndicator()
+                  : Text(localize.register),
         ),
       );
     }
@@ -143,10 +149,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        localize.register,
-                        style: textTheme.titleLarge,
-                      ),
+                      Text(localize.register, style: textTheme.titleLarge),
                       Text(localize.createNewAccount),
                       const SizedBox(height: defaultPadding * 4),
                       fieldName(),
@@ -181,7 +184,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding)
+              const SizedBox(height: defaultPadding),
             ],
           ),
         ),

@@ -28,10 +28,7 @@ class _MapViewerScreenState extends State<MapViewerScreen> {
     final marker = Marker(
       markerId: const MarkerId("source"),
       position: latLng,
-      infoWindow: InfoWindow(
-        title: street,
-        snippet: address,
-      ),
+      infoWindow: InfoWindow(title: street, snippet: address),
     );
 
     setState(() {
@@ -50,9 +47,7 @@ class _MapViewerScreenState extends State<MapViewerScreen> {
             backgroundColor: Colors.white,
             heroTag: "zoom-in",
             onPressed: () {
-              mapController.animateCamera(
-                CameraUpdate.zoomIn(),
-              );
+              mapController.animateCamera(CameraUpdate.zoomIn());
             },
             child: const Icon(Icons.add),
           ),
@@ -60,9 +55,7 @@ class _MapViewerScreenState extends State<MapViewerScreen> {
             backgroundColor: Colors.white,
             heroTag: "zoom-out",
             onPressed: () {
-              mapController.animateCamera(
-                CameraUpdate.zoomOut(),
-              );
+              mapController.animateCamera(CameraUpdate.zoomOut());
             },
             child: const Icon(Icons.remove),
           ),
@@ -74,19 +67,20 @@ class _MapViewerScreenState extends State<MapViewerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.location),
-      ),
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.location)),
       body: Center(
         child: Stack(
           children: [
             GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: widget.latLng, zoom: 18),
+              initialCameraPosition: CameraPosition(
+                target: widget.latLng,
+                zoom: 18,
+              ),
               onMapCreated: (controller) async {
                 defineMarker(widget.latLng);
                 final place = await getPlacemark(
-                    LatLng(widget.latLng.latitude, widget.latLng.longitude));
+                  LatLng(widget.latLng.latitude, widget.latLng.longitude),
+                );
                 setState(() {
                   placemark = place;
                   mapController = controller;

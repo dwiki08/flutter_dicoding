@@ -12,7 +12,8 @@ part of 'error_result.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ErrorResult {
@@ -32,8 +33,9 @@ mixin _$ErrorResult {
 /// @nodoc
 abstract class $ErrorResultCopyWith<$Res> {
   factory $ErrorResultCopyWith(
-          ErrorResult value, $Res Function(ErrorResult) then) =
-      _$ErrorResultCopyWithImpl<$Res, ErrorResult>;
+    ErrorResult value,
+    $Res Function(ErrorResult) then,
+  ) = _$ErrorResultCopyWithImpl<$Res, ErrorResult>;
 
   @useResult
   $Res call({String? message, int? code, Exception? exception});
@@ -59,20 +61,26 @@ class _$ErrorResultCopyWithImpl<$Res, $Val extends ErrorResult>
     Object? code = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_value.copyWith(
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int?,
-      exception: freezed == exception
-          ? _value.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Exception?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            message:
+                freezed == message
+                    ? _value.message
+                    : message // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            code:
+                freezed == code
+                    ? _value.code
+                    : code // ignore: cast_nullable_to_non_nullable
+                        as int?,
+            exception:
+                freezed == exception
+                    ? _value.exception
+                    : exception // ignore: cast_nullable_to_non_nullable
+                        as Exception?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -80,8 +88,9 @@ class _$ErrorResultCopyWithImpl<$Res, $Val extends ErrorResult>
 abstract class _$$ErrorResultImplCopyWith<$Res>
     implements $ErrorResultCopyWith<$Res> {
   factory _$$ErrorResultImplCopyWith(
-          _$ErrorResultImpl value, $Res Function(_$ErrorResultImpl) then) =
-      __$$ErrorResultImplCopyWithImpl<$Res>;
+    _$ErrorResultImpl value,
+    $Res Function(_$ErrorResultImpl) then,
+  ) = __$$ErrorResultImplCopyWithImpl<$Res>;
 
   @override
   @useResult
@@ -93,8 +102,9 @@ class __$$ErrorResultImplCopyWithImpl<$Res>
     extends _$ErrorResultCopyWithImpl<$Res, _$ErrorResultImpl>
     implements _$$ErrorResultImplCopyWith<$Res> {
   __$$ErrorResultImplCopyWithImpl(
-      _$ErrorResultImpl _value, $Res Function(_$ErrorResultImpl) _then)
-      : super(_value, _then);
+    _$ErrorResultImpl _value,
+    $Res Function(_$ErrorResultImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ErrorResult
   /// with the given fields replaced by the non-null parameter values.
@@ -105,20 +115,25 @@ class __$$ErrorResultImplCopyWithImpl<$Res>
     Object? code = freezed,
     Object? exception = freezed,
   }) {
-    return _then(_$ErrorResultImpl(
-      message: freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as int?,
-      exception: freezed == exception
-          ? _value.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Exception?,
-    ));
+    return _then(
+      _$ErrorResultImpl(
+        message:
+            freezed == message
+                ? _value.message
+                : message // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        code:
+            freezed == code
+                ? _value.code
+                : code // ignore: cast_nullable_to_non_nullable
+                    as int?,
+        exception:
+            freezed == exception
+                ? _value.exception
+                : exception // ignore: cast_nullable_to_non_nullable
+                    as Exception?,
+      ),
+    );
   }
 }
 
@@ -163,10 +178,11 @@ class _$ErrorResultImpl implements _ErrorResult {
 }
 
 abstract class _ErrorResult implements ErrorResult {
-  const factory _ErrorResult(
-      {final String? message,
-      final int? code,
-      final Exception? exception}) = _$ErrorResultImpl;
+  const factory _ErrorResult({
+    final String? message,
+    final int? code,
+    final Exception? exception,
+  }) = _$ErrorResultImpl;
 
   @override
   String? get message;

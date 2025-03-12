@@ -16,13 +16,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class RemoteDataSource {
   final ApiService _apiService = getIt.get<ApiService>();
 
-  Future<Either<ErrorResult, bool>> register(
-      {required String name,
-      required String email,
-      required String password}) async {
+  Future<Either<ErrorResult, bool>> register({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
     try {
-      final response = await _apiService
-          .postRegister(RegisterRequest(name, email, password));
+      final response = await _apiService.postRegister(
+        RegisterRequest(name, email, password),
+      );
       if (response.isSuccessful) {
         return const Right(true);
       } else {
@@ -33,11 +35,14 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ErrorResult, String>> login(
-      {required String email, required String password}) async {
+  Future<Either<ErrorResult, String>> login({
+    required String email,
+    required String password,
+  }) async {
     try {
-      final response =
-          await _apiService.postLogin(LoginRequest(email, password));
+      final response = await _apiService.postLogin(
+        LoginRequest(email, password),
+      );
       if (response.isSuccessful) {
         final token = response.body?.loginResult?.token ?? '';
         return Right(token);
@@ -49,8 +54,10 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ErrorResult, List<Story>>> getListStory(
-      {int? page, int? size}) async {
+  Future<Either<ErrorResult, List<Story>>> getListStory({
+    int? page,
+    int? size,
+  }) async {
     try {
       final response = await _apiService.getListStory(page: page, size: size);
       if (response.isSuccessful) {
@@ -93,10 +100,11 @@ class RemoteDataSource {
     }
   }
 
-  Future<Either<ErrorResult, bool>> addStory(
-      {required String description,
-      required String filePath,
-      LatLng? location}) async {
+  Future<Either<ErrorResult, bool>> addStory({
+    required String description,
+    required String filePath,
+    LatLng? location,
+  }) async {
     try {
       List<PartValue> requestParams = [
         PartValue("description", description),

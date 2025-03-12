@@ -14,7 +14,7 @@ class Loading extends StatelessWidget {
         children: [
           const CircularProgressIndicator(),
           const SizedBox(height: defaultPadding),
-          Text('${localize.loading}....')
+          Text('${localize.loading}....'),
         ],
       ),
     );

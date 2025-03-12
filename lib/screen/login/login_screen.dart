@@ -6,8 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen(
-      {super.key, required this.toRegister, required this.onLoggedIn});
+  const LoginScreen({
+    super.key,
+    required this.toRegister,
+    required this.onLoggedIn,
+  });
 
   final Function() toRegister;
   final Function(bool isLoggedIn) onLoggedIn;
@@ -39,9 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
     doLogin() {
       context.read<AuthProvider>().login(
-            email: _emailTextController.text,
-            password: _passwordTextController.text,
-          );
+        email: _emailTextController.text,
+        password: _passwordTextController.text,
+      );
     }
 
     Widget checkAuth() {
@@ -72,10 +75,11 @@ class _LoginScreenState extends State<LoginScreen> {
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
         decoration: textFieldDecoration(
-            context: context,
-            icon: const Icon(Icons.email_outlined),
-            label: localize.email,
-            hint: localize.emailHint),
+          context: context,
+          icon: const Icon(Icons.email_outlined),
+          label: localize.email,
+          hint: localize.emailHint,
+        ),
       );
     }
 
@@ -97,9 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 _hidePassword = !_hidePassword;
               });
             },
-            icon: _hidePassword
-                ? const Icon(Icons.visibility_off)
-                : const Icon(Icons.visibility),
+            icon:
+                _hidePassword
+                    ? const Icon(Icons.visibility_off)
+                    : const Icon(Icons.visibility),
           ),
         ),
       );
@@ -110,16 +115,18 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(defaultCircularRadius),
-              ),
-              minimumSize: const Size(100, 42)),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(defaultCircularRadius),
+            ),
+            minimumSize: const Size(100, 42),
+          ),
           onPressed: () {
             if (state != DataState.isLoading) doLogin();
           },
-          child: state == DataState.isLoading
-              ? const LinearProgressIndicator()
-              : Text(localize.login),
+          child:
+              state == DataState.isLoading
+                  ? const LinearProgressIndicator()
+                  : Text(localize.login),
         ),
       );
     }
@@ -137,10 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        localize.login,
-                        style: textTheme.titleLarge,
-                      ),
+                      Text(localize.login, style: textTheme.titleLarge),
                       Text(localize.welcomeApp),
                       const SizedBox(height: defaultPadding * 4),
                       fieldEmail(),
@@ -173,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              const SizedBox(height: defaultPadding)
+              const SizedBox(height: defaultPadding),
             ],
           ),
         ),

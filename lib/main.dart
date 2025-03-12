@@ -13,14 +13,16 @@ import 'providers/setting_provider.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupInjection();
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => PageManager()),
-      ChangeNotifierProvider(create: (context) => AuthProvider()),
-      ChangeNotifierProvider(create: (context) => SettingProvider()),
-    ],
-    child: const MyApp(),
-  ));
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => PageManager()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => SettingProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -55,11 +57,14 @@ class _MyAppState extends State<MyApp> {
             colorScheme: colorScheme(context),
             useMaterial3: true,
             appBarTheme: AppBarTheme(
-                color: const Color(0xFF717DBA),
-                titleTextStyle: textTheme.titleLarge
-                    ?.copyWith(color: Colors.white, fontSize: 20),
-                actionsIconTheme: const IconThemeData(color: Colors.white),
-                iconTheme: const IconThemeData(color: Colors.white)),
+              color: const Color(0xFF717DBA),
+              titleTextStyle: textTheme.titleLarge?.copyWith(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+              actionsIconTheme: const IconThemeData(color: Colors.white),
+              iconTheme: const IconThemeData(color: Colors.white),
+            ),
             textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
           ),
           home: Router(

@@ -12,7 +12,8 @@ part of 'story.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Story {
@@ -44,15 +45,16 @@ abstract class $StoryCopyWith<$Res> {
       _$StoryCopyWithImpl<$Res, Story>;
 
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String description,
-      String photoUrl,
-      DateTime createdAt,
-      double? lat,
-      double? lon,
-      Placemark? place});
+  $Res call({
+    String id,
+    String name,
+    String description,
+    String photoUrl,
+    DateTime createdAt,
+    double? lat,
+    double? lon,
+    Placemark? place,
+  });
 }
 
 /// @nodoc
@@ -80,60 +82,73 @@ class _$StoryCopyWithImpl<$Res, $Val extends Story>
     Object? lon = freezed,
     Object? place = freezed,
   }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      photoUrl: null == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lat: freezed == lat
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as double?,
-      lon: freezed == lon
-          ? _value.lon
-          : lon // ignore: cast_nullable_to_non_nullable
-              as double?,
-      place: freezed == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
-              as Placemark?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as String,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            description:
+                null == description
+                    ? _value.description
+                    : description // ignore: cast_nullable_to_non_nullable
+                        as String,
+            photoUrl:
+                null == photoUrl
+                    ? _value.photoUrl
+                    : photoUrl // ignore: cast_nullable_to_non_nullable
+                        as String,
+            createdAt:
+                null == createdAt
+                    ? _value.createdAt
+                    : createdAt // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            lat:
+                freezed == lat
+                    ? _value.lat
+                    : lat // ignore: cast_nullable_to_non_nullable
+                        as double?,
+            lon:
+                freezed == lon
+                    ? _value.lon
+                    : lon // ignore: cast_nullable_to_non_nullable
+                        as double?,
+            place:
+                freezed == place
+                    ? _value.place
+                    : place // ignore: cast_nullable_to_non_nullable
+                        as Placemark?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$StoryImplCopyWith<$Res> implements $StoryCopyWith<$Res> {
   factory _$$StoryImplCopyWith(
-          _$StoryImpl value, $Res Function(_$StoryImpl) then) =
-      __$$StoryImplCopyWithImpl<$Res>;
+    _$StoryImpl value,
+    $Res Function(_$StoryImpl) then,
+  ) = __$$StoryImplCopyWithImpl<$Res>;
 
   @override
   @useResult
-  $Res call(
-      {String id,
-      String name,
-      String description,
-      String photoUrl,
-      DateTime createdAt,
-      double? lat,
-      double? lon,
-      Placemark? place});
+  $Res call({
+    String id,
+    String name,
+    String description,
+    String photoUrl,
+    DateTime createdAt,
+    double? lat,
+    double? lon,
+    Placemark? place,
+  });
 }
 
 /// @nodoc
@@ -141,8 +156,9 @@ class __$$StoryImplCopyWithImpl<$Res>
     extends _$StoryCopyWithImpl<$Res, _$StoryImpl>
     implements _$$StoryImplCopyWith<$Res> {
   __$$StoryImplCopyWithImpl(
-      _$StoryImpl _value, $Res Function(_$StoryImpl) _then)
-      : super(_value, _then);
+    _$StoryImpl _value,
+    $Res Function(_$StoryImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Story
   /// with the given fields replaced by the non-null parameter values.
@@ -158,56 +174,66 @@ class __$$StoryImplCopyWithImpl<$Res>
     Object? lon = freezed,
     Object? place = freezed,
   }) {
-    return _then(_$StoryImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      description: null == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String,
-      photoUrl: null == photoUrl
-          ? _value.photoUrl
-          : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      lat: freezed == lat
-          ? _value.lat
-          : lat // ignore: cast_nullable_to_non_nullable
-              as double?,
-      lon: freezed == lon
-          ? _value.lon
-          : lon // ignore: cast_nullable_to_non_nullable
-              as double?,
-      place: freezed == place
-          ? _value.place
-          : place // ignore: cast_nullable_to_non_nullable
-              as Placemark?,
-    ));
+    return _then(
+      _$StoryImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as String,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        description:
+            null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String,
+        photoUrl:
+            null == photoUrl
+                ? _value.photoUrl
+                : photoUrl // ignore: cast_nullable_to_non_nullable
+                    as String,
+        createdAt:
+            null == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        lat:
+            freezed == lat
+                ? _value.lat
+                : lat // ignore: cast_nullable_to_non_nullable
+                    as double?,
+        lon:
+            freezed == lon
+                ? _value.lon
+                : lon // ignore: cast_nullable_to_non_nullable
+                    as double?,
+        place:
+            freezed == place
+                ? _value.place
+                : place // ignore: cast_nullable_to_non_nullable
+                    as Placemark?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$StoryImpl extends _Story {
-  const _$StoryImpl(
-      {required this.id,
-      required this.name,
-      required this.description,
-      required this.photoUrl,
-      required this.createdAt,
-      this.lat,
-      this.lon,
-      this.place})
-      : super._();
+  const _$StoryImpl({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.photoUrl,
+    required this.createdAt,
+    this.lat,
+    this.lon,
+    this.place,
+  }) : super._();
 
   @override
   final String id;
@@ -251,7 +277,16 @@ class _$StoryImpl extends _Story {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, name, description, photoUrl, createdAt, lat, lon, place);
+    runtimeType,
+    id,
+    name,
+    description,
+    photoUrl,
+    createdAt,
+    lat,
+    lon,
+    place,
+  );
 
   /// Create a copy of Story
   /// with the given fields replaced by the non-null parameter values.
@@ -263,15 +298,16 @@ class _$StoryImpl extends _Story {
 }
 
 abstract class _Story extends Story {
-  const factory _Story(
-      {required final String id,
-      required final String name,
-      required final String description,
-      required final String photoUrl,
-      required final DateTime createdAt,
-      final double? lat,
-      final double? lon,
-      final Placemark? place}) = _$StoryImpl;
+  const factory _Story({
+    required final String id,
+    required final String name,
+    required final String description,
+    required final String photoUrl,
+    required final DateTime createdAt,
+    final double? lat,
+    final double? lon,
+    final Placemark? place,
+  }) = _$StoryImpl;
 
   const _Story._() : super._();
 

@@ -24,7 +24,8 @@ class Story with _$Story {
   String formattedDate({String? format = 'hh.mm d MMMM yyyy', Locale? locale}) {
     final defaultLocale = PlatformDispatcher.instance.locale;
     return DateFormat(
-            format, locale?.languageCode ?? defaultLocale.languageCode)
-        .format(createdAt);
+      format,
+      locale?.languageCode ?? defaultLocale.languageCode,
+    ).format(createdAt);
   }
 }

@@ -30,18 +30,12 @@ class ErrorView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          SvgPicture.asset(
-            assetsIcons(icon),
-            height: 100,
-            width: 100,
-          ),
-          const SizedBox(
-            height: defaultPadding,
-          ),
+          SvgPicture.asset(assetsIcons(icon), height: 100, width: 100),
+          const SizedBox(height: defaultPadding),
           Padding(
             padding: const EdgeInsets.all(defaultPadding),
             child: Text(error?.code?.httpCodeText() ?? ''),
-          )
+          ),
         ],
       ),
     );

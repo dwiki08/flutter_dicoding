@@ -9,15 +9,22 @@ class HeaderInterceptor implements Interceptor {
 
   @override
   FutureOr<Response<BodyType>> intercept<BodyType>(
-      Chain<BodyType> chain) async {
+    Chain<BodyType> chain,
+  ) async {
     Request modifiedRequest = chain.request;
     final token = await localData.getAuthToken();
     if (token != null) {
-      modifiedRequest =
-          applyHeader(modifiedRequest, 'Authorization', 'Bearer $token');
+      modifiedRequest = applyHeader(
+        modifiedRequest,
+        'Authorization',
+        'Bearer $token',
+      );
     }
-    modifiedRequest =
-        applyHeader(modifiedRequest, 'Content-Type', 'application/json');
+    modifiedRequest = applyHeader(
+      modifiedRequest,
+      'Content-Type',
+      'application/json',
+    );
     return chain.proceed(modifiedRequest);
   }
 }

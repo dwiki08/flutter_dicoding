@@ -89,7 +89,7 @@ class _StoryPageState extends State<StoryPage> {
                                       Text(
                                         '${placemark.subLocality}, ${placemark.locality}, ${placemark.postalCode}, ${placemark.country}',
                                         style: textTheme.labelMedium,
-                                      )
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -97,28 +97,26 @@ class _StoryPageState extends State<StoryPage> {
                                 IconButton.outlined(
                                   onPressed: () {
                                     widget.onMapView(
-                                        LatLng(story.lat!, story.lon!));
+                                      LatLng(story.lat!, story.lon!),
+                                    );
                                   },
                                   icon: const Icon(Icons.map_outlined),
-                                )
+                                ),
                               ],
                             ),
                           ),
                         const SizedBox(height: defaultPadding),
-                        Text(
-                          story.name,
-                          style: textTheme.titleMedium,
-                        ),
+                        Text(story.name, style: textTheme.titleMedium),
                         Text(
                           story.formattedDate(),
                           style: textTheme.labelMedium,
                         ),
                         const SizedBox(height: defaultPadding),
                         Text(story.description),
-                        const SizedBox(height: 100)
+                        const SizedBox(height: 100),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             );

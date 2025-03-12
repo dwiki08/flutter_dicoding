@@ -11,7 +11,9 @@ class JsonToTypeConverter extends JsonConverter {
   Response<BodyType> convertResponse<BodyType, InnerType>(Response response) {
     return response.copyWith(
       body: fromJsonData<BodyType, InnerType>(
-          response.bodyString, typeToJsonFactoryMap[InnerType]!),
+        response.bodyString,
+        typeToJsonFactoryMap[InnerType]!,
+      ),
     );
   }
 
@@ -20,8 +22,11 @@ class JsonToTypeConverter extends JsonConverter {
 
     if (jsonMap is List) {
       return jsonMap
-          .map((item) => jsonParser(item as Map<String, dynamic>) as InnerType)
-          .toList() as T;
+              .map(
+                (item) => jsonParser(item as Map<String, dynamic>) as InnerType,
+              )
+              .toList()
+          as T;
     }
 
     return jsonParser(jsonMap);

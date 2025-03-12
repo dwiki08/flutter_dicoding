@@ -19,7 +19,5 @@ final chopperClient = ChopperClient(
     ListStoryResponse: (json) => ListStoryResponse.fromJson(json),
     DetailStoryResponse: (json) => DetailStoryResponse.fromJson(json),
   }),
-  interceptors: [
-    HeaderInterceptor(),
-  ],
+  interceptors: [HeaderInterceptor()],
 );

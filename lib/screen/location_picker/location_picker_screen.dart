@@ -37,9 +37,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             backgroundColor: Colors.white,
             heroTag: "zoom-in",
             onPressed: () {
-              mapController.animateCamera(
-                CameraUpdate.zoomIn(),
-              );
+              mapController.animateCamera(CameraUpdate.zoomIn());
             },
             child: const Icon(Icons.add),
           ),
@@ -48,9 +46,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
             backgroundColor: Colors.white,
             heroTag: "zoom-out",
             onPressed: () {
-              mapController.animateCamera(
-                CameraUpdate.zoomOut(),
-              );
+              mapController.animateCamera(CameraUpdate.zoomOut());
             },
             child: const Icon(Icons.remove),
           ),
@@ -73,24 +69,25 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
           },
           offset: const Offset(0, 54),
           icon: const Icon(Icons.layers_outlined),
-          itemBuilder: (BuildContext context) => <PopupMenuEntry<MapType>>[
-            const PopupMenuItem<MapType>(
-              value: MapType.normal,
-              child: Text('Normal'),
-            ),
-            const PopupMenuItem<MapType>(
-              value: MapType.satellite,
-              child: Text('Satellite'),
-            ),
-            const PopupMenuItem<MapType>(
-              value: MapType.terrain,
-              child: Text('Terrain'),
-            ),
-            const PopupMenuItem<MapType>(
-              value: MapType.hybrid,
-              child: Text('Hybrid'),
-            ),
-          ],
+          itemBuilder:
+              (BuildContext context) => <PopupMenuEntry<MapType>>[
+                const PopupMenuItem<MapType>(
+                  value: MapType.normal,
+                  child: Text('Normal'),
+                ),
+                const PopupMenuItem<MapType>(
+                  value: MapType.satellite,
+                  child: Text('Satellite'),
+                ),
+                const PopupMenuItem<MapType>(
+                  value: MapType.terrain,
+                  child: Text('Terrain'),
+                ),
+                const PopupMenuItem<MapType>(
+                  value: MapType.hybrid,
+                  child: Text('Hybrid'),
+                ),
+              ],
         ),
       ),
     );
@@ -102,10 +99,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       right: 16,
       child: FloatingActionButton.small(
         backgroundColor: Colors.white,
-        child: const Icon(
-          Icons.my_location,
-          color: Colors.blueAccent,
-        ),
+        child: const Icon(Icons.my_location, color: Colors.blueAccent),
         onPressed: () => onMyLocationButtonPress(),
       ),
     );
@@ -119,10 +113,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
     final marker = Marker(
       markerId: const MarkerId("source"),
       position: latLng,
-      infoWindow: InfoWindow(
-        title: street,
-        snippet: address,
-      ),
+      infoWindow: InfoWindow(title: street, snippet: address),
     );
 
     setState(() {
@@ -139,9 +130,7 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
     defineMarker(latLng);
 
-    mapController.animateCamera(
-      CameraUpdate.newLatLng(latLng),
-    );
+    mapController.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 
   void onMyLocationButtonPress() async {
@@ -160,28 +149,27 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
 
     defineMarker(latLng);
 
-    mapController.animateCamera(
-      CameraUpdate.newLatLng(latLng),
-    );
+    mapController.animateCamera(CameraUpdate.newLatLng(latLng));
   }
 
   @override
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(localize.chooseLocation),
-      ),
+      appBar: AppBar(title: Text(localize.chooseLocation)),
       body: Center(
         child: Stack(
           children: [
             GoogleMap(
-              initialCameraPosition:
-                  CameraPosition(target: defaultLocation, zoom: 18),
+              initialCameraPosition: CameraPosition(
+                target: defaultLocation,
+                zoom: 18,
+              ),
               onMapCreated: (controller) async {
                 defineMarker(defaultLocation);
-                final place = await getPlacemark(LatLng(
-                    defaultLocation.latitude, defaultLocation.longitude));
+                final place = await getPlacemark(
+                  LatLng(defaultLocation.latitude, defaultLocation.longitude),
+                );
                 setState(() {
                   placemark = place;
                   mapController = controller;
@@ -210,7 +198,10 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
                   showChooseButton: true,
                   onChooseButton: (latLng) {
                     widget.onPickLocation(latLng);
-                    context.read<PageManager>().returnResult((result: PageResult.ok, data: latLng));
+                    context.read<PageManager>().returnResult((
+                      result: PageResult.ok,
+                      data: latLng,
+                    ));
                   },
                 ),
               ),

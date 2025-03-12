@@ -23,16 +23,13 @@ InputDecoration textFieldDecoration({
   Widget? icon,
   String? error,
   Widget? suffixIcon,
-}) =>
-    InputDecoration(
-      icon: icon,
-      labelText: label,
-      hintText: hint,
-      hintStyle: Theme.of(context).textTheme.labelMedium,
-      alignLabelWithHint: true,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      errorText: error,
-      suffixIcon: suffixIcon,
-    );
+}) => InputDecoration(
+  icon: icon,
+  labelText: label,
+  hintText: hint,
+  hintStyle: Theme.of(context).textTheme.labelMedium,
+  alignLabelWithHint: true,
+  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+  errorText: error,
+  suffixIcon: suffixIcon,
+);

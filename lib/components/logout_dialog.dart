@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 class LogoutDialog extends Page {
   const LogoutDialog({required this.onLogout})
-      : super(key: const ValueKey(RouteKey.dialog));
+    : super(key: const ValueKey(RouteKey.dialog));
 
   final Function(bool isLoggedOut) onLogout;
 
@@ -34,28 +34,24 @@ class LogoutDialog extends Page {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                        child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          localize.logout,
-                          style: textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: defaultPadding),
-                        Text(
-                          localize.logoutDialog,
-                          style: textTheme.bodyMedium,
-                        ),
-                      ],
-                    )),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(localize.logout, style: textTheme.titleLarge),
+                          const SizedBox(height: defaultPadding),
+                          Text(
+                            localize.logoutDialog,
+                            style: textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
                           onPressed: () => onLogout(false),
-                          child: Text(
-                            localize.cancel,
-                          ),
+                          child: Text(localize.cancel),
                         ),
                         TextButton(
                           onPressed: () async {
@@ -64,12 +60,13 @@ class LogoutDialog extends Page {
                           },
                           child: Text(
                             localize.yes,
-                            style: textTheme.labelLarge
-                                ?.copyWith(color: Colors.blueAccent),
+                            style: textTheme.labelLarge?.copyWith(
+                              color: Colors.blueAccent,
+                            ),
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

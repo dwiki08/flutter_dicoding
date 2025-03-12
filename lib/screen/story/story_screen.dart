@@ -14,10 +14,7 @@ class StoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => StoryProvider(),
-      child: StoryPage(
-        id: id,
-        onMapView: (latLng) => onMapView(latLng),
-      ),
+      child: StoryPage(id: id, onMapView: (latLng) => onMapView(latLng)),
     );
   }
 }

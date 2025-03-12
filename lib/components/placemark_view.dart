@@ -33,7 +33,7 @@ class PlacemarkView extends StatelessWidget {
             blurRadius: 16,
             offset: Offset.zero,
             color: Colors.grey.withOpacity(0.5),
-          )
+          ),
         ],
       ),
       child: Column(
@@ -54,26 +54,27 @@ class PlacemarkView extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                  )
+                  ),
                 ],
               ),
             ),
           ),
           Visibility(
-              visible: showChooseButton,
-              child: ElevatedButton.icon(
-                icon: SvgPicture.asset(
-                  assetsIcons('ic_pin_map.svg'),
-                  height: 24,
-                  width: 24,
-                ),
-                onPressed: () {
-                  if (onChooseButton != null) {
-                    onChooseButton!(latLng);
-                  }
-                },
-                label: Text(AppLocalizations.of(context)!.choose),
-              ))
+            visible: showChooseButton,
+            child: ElevatedButton.icon(
+              icon: SvgPicture.asset(
+                assetsIcons('ic_pin_map.svg'),
+                height: 24,
+                width: 24,
+              ),
+              onPressed: () {
+                if (onChooseButton != null) {
+                  onChooseButton!(latLng);
+                }
+              },
+              label: Text(AppLocalizations.of(context)!.choose),
+            ),
+          ),
         ],
       ),
     );

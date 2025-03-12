@@ -99,46 +99,48 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: appBar(),
       floatingActionButton: fab(),
-      body: Consumer<StoryProvider>(builder: (context, state, child) {
-        switch (state.state) {
-          case DataState.isLoading:
-            return const Loading();
-          case DataState.error:
-            return ErrorView(error: state.error);
-          case DataState.hasData:
-            final List<Story> list = state.list;
-            return RefreshIndicator(
-              onRefresh: () {
-                return getListStory(reload: true);
-              },
-              child: ListView.builder(
-                controller: scrollController,
-                shrinkWrap: true,
-                itemCount: list.length + (state.page != 0 ? 1 : 0),
-                itemBuilder: (context, i) {
-                  if (i == list.length) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(8),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-                  return Column(
-                    children: [
-                      StoryCard(
-                        story: list[i],
-                        onCardTap: widget.onDetailStory,
-                      ),
-                    ],
-                  );
+      body: Consumer<StoryProvider>(
+        builder: (context, state, child) {
+          switch (state.state) {
+            case DataState.isLoading:
+              return const Loading();
+            case DataState.error:
+              return ErrorView(error: state.error);
+            case DataState.hasData:
+              final List<Story> list = state.list;
+              return RefreshIndicator(
+                onRefresh: () {
+                  return getListStory(reload: true);
                 },
-              ),
-            );
-          case DataState.noData:
-            return Container();
-        }
-      }),
+                child: ListView.builder(
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  itemCount: list.length + (state.page != 0 ? 1 : 0),
+                  itemBuilder: (context, i) {
+                    if (i == list.length) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: CircularProgressIndicator(),
+                        ),
+                      );
+                    }
+                    return Column(
+                      children: [
+                        StoryCard(
+                          story: list[i],
+                          onCardTap: widget.onDetailStory,
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              );
+            case DataState.noData:
+              return Container();
+          }
+        },
+      ),
     );
   }
 }

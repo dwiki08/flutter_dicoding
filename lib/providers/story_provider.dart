@@ -48,20 +48,25 @@ class StoryProvider extends ChangeNotifier {
       notifyListeners();
     }
     await Future.delayed(const Duration(seconds: 2));
-    final result =
-        await _remoteDataSource.getListStory(page: page, size: sizeItems);
-    result.fold((e) {
-      _state = DataState.error;
-      _error = e;
-    }, (s) {
-      _state = s.isEmpty ? DataState.noData : DataState.hasData;
-      _list.addAll(s);
-      if (s.length < sizeItems) {
-        page = 0;
-      } else {
-        page = page + 1;
-      }
-    });
+    final result = await _remoteDataSource.getListStory(
+      page: page,
+      size: sizeItems,
+    );
+    result.fold(
+      (e) {
+        _state = DataState.error;
+        _error = e;
+      },
+      (s) {
+        _state = s.isEmpty ? DataState.noData : DataState.hasData;
+        _list.addAll(s);
+        if (s.length < sizeItems) {
+          page = 0;
+        } else {
+          page = page + 1;
+        }
+      },
+    );
     notifyListeners();
   }
 
@@ -69,13 +74,16 @@ class StoryProvider extends ChangeNotifier {
     _state = DataState.isLoading;
     notifyListeners();
     final result = await _remoteDataSource.getStory(storyId: id);
-    result.fold((e) {
-      _state = DataState.error;
-      _error = e;
-    }, (s) {
-      _state = DataState.hasData;
-      _story = s;
-    });
+    result.fold(
+      (e) {
+        _state = DataState.error;
+        _error = e;
+      },
+      (s) {
+        _state = DataState.hasData;
+        _story = s;
+      },
+    );
     if (_story?.lat != null && _story?.lon != null) {
       _placemark = await getPlacemark(LatLng(_story!.lat!, _story!.lon!));
     }
@@ -83,7 +91,10 @@ class StoryProvider extends ChangeNotifier {
   }
 
   Future<void> addStory(
-      String description, String filePath, LatLng? location) async {
+    String description,
+    String filePath,
+    LatLng? location,
+  ) async {
     _state = DataState.isLoading;
     notifyListeners();
 
@@ -92,14 +103,17 @@ class StoryProvider extends ChangeNotifier {
       filePath: filePath,
       location: location,
     );
-    result.fold((e) {
-      _storyAdded = false;
-      _state = DataState.error;
-      _error = e;
-    }, (s) {
-      _storyAdded = true;
-      _state = DataState.hasData;
-    });
+    result.fold(
+      (e) {
+        _storyAdded = false;
+        _state = DataState.error;
+        _error = e;
+      },
+      (s) {
+        _storyAdded = true;
+        _state = DataState.hasData;
+      },
+    );
 
     notifyListeners();
   }

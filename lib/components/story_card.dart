@@ -27,53 +27,55 @@ class StoryCard extends StatelessWidget {
       padding: const EdgeInsets.all(defaultPadding / 2),
       width: double.infinity,
       child: Card(
-          clipBehavior: Clip.hardEdge,
-          child: InkWell(
-            onTap: () => onCardTap(story.id),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CachedNetworkImage(
-                  cacheKey: story.id,
-                  imageUrl: story.photoUrl,
-                  placeholder: (context, url) => const Loading(),
-                  errorWidget: (context, s, o) => placeHolder(),
-                  width: double.infinity,
-                  fit: BoxFit.fitWidth,
-                  height: 200,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(defaultPadding / 2),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        story.name,
-                        style: textTheme.bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+        clipBehavior: Clip.hardEdge,
+        child: InkWell(
+          onTap: () => onCardTap(story.id),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CachedNetworkImage(
+                cacheKey: story.id,
+                imageUrl: story.photoUrl,
+                placeholder: (context, url) => const Loading(),
+                errorWidget: (context, s, o) => placeHolder(),
+                width: double.infinity,
+                fit: BoxFit.fitWidth,
+                height: 200,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(defaultPadding / 2),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      story.name,
+                      style: textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                    Text(
+                      story.formattedDate(format: 'hh.mm - d MMMM yyyy'),
+                      style: textTheme.labelMedium,
+                    ),
+                    if (story.place != null)
                       Text(
-                        story.formattedDate(format: 'hh.mm - d MMMM yyyy'),
+                        '${story.place?.subLocality}, ${story.place?.locality}, ${story.place?.postalCode}, ${story.place?.country}',
                         style: textTheme.labelMedium,
                       ),
-                      if (story.place != null)
-                        Text(
-                          '${story.place?.subLocality}, ${story.place?.locality}, ${story.place?.postalCode}, ${story.place?.country}',
-                          style: textTheme.labelMedium,
-                        ),
-                      const SizedBox(height: defaultPadding / 2),
-                      Text(
-                        story.description,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )),
+                    const SizedBox(height: defaultPadding / 2),
+                    Text(
+                      story.description,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
