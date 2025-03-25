@@ -32,7 +32,7 @@ class PlacemarkView extends StatelessWidget {
           BoxShadow(
             blurRadius: 16,
             offset: Offset.zero,
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.grey.withValues(alpha: 0.5),
           ),
         ],
       ),
