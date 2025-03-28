@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddStoryScreen extends StatelessWidget {
+  static const routePath = '/add-story';
+
   const AddStoryScreen({
     super.key,
     required this.onStoryAdded,

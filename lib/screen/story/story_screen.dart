@@ -5,6 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class StoryScreen extends StatelessWidget {
+  static const routePath = '/story/:id';
+  static String getRoutePath(String id) => routePath.replaceAll(':id', id);
+
   const StoryScreen({super.key, required this.id, required this.onMapView});
 
   final String id;

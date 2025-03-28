@@ -6,6 +6,8 @@ import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapViewerScreen extends StatefulWidget {
+  static const routePath = '/map-viewer';
+
   const MapViewerScreen({super.key, required this.latLng});
 
   final LatLng latLng;

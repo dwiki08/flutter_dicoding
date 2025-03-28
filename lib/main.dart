@@ -2,7 +2,7 @@ import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/providers/auth_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
-import 'package:dicoding_flutter/routes/router_delegate.dart';
+import 'package:dicoding_flutter/routes/router.dart';
 import 'package:dicoding_flutter/utils/common.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +33,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late MyRouterDelegate myRouterDelegate;
 
   @override
   void initState() {
     super.initState();
-    myRouterDelegate = MyRouterDelegate();
     context.read<SettingProvider>().getLocale();
   }
 
@@ -47,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     final textTheme = Theme.of(context).textTheme;
     return Consumer<SettingProvider>(
       builder: (context, state, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           locale: state.locale,
           debugShowCheckedModeBanner: false,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -67,10 +65,7 @@ class _MyAppState extends State<MyApp> {
             ),
             textTheme: Theme.of(context).textTheme.apply(fontFamily: 'Poppins'),
           ),
-          home: Router(
-            routerDelegate: myRouterDelegate,
-            backButtonDispatcher: RootBackButtonDispatcher(),
-          ),
+          routerConfig: routerConfig,
         );
       },
     );

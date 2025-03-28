@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
+  static const routePath = '/home';
+
   const HomeScreen({
     super.key,
     required this.onLogout,

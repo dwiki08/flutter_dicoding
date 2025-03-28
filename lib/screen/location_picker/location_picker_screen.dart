@@ -11,6 +11,8 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 class LocationPickerScreen extends StatefulWidget {
+  static const routePath = '/location-picker';
+
   const LocationPickerScreen({super.key, required this.onPickLocation});
 
   final Function(LatLng latLng) onPickLocation;

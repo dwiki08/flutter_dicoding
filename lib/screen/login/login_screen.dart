@@ -6,6 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const routePath = '/login';
+
   const LoginScreen({
     super.key,
     required this.toRegister,
@@ -36,8 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
-    final size = MediaQuery.of(context).size;
-    final state = context.watch<AuthProvider>().state;
+    final state = context.watch<AuthProvider>();
     final isLoggedIn = context.watch<AuthProvider>().isLoggedIn;
 
     doLogin() {
@@ -48,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     Widget checkAuth() {
-      switch (state) {
+      switch (state.state) {
         case DataState.error:
           return Text(
             localize.authNotMatch,
@@ -70,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     fieldEmail() {
       return TextField(
-        enabled: state != DataState.isLoading,
+        enabled: state.state != DataState.isLoading,
         controller: _emailTextController,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
@@ -85,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     fieldPassword() {
       return TextField(
-        enabled: state != DataState.isLoading,
+        enabled: state.state != DataState.isLoading,
         controller: _passwordTextController,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: TextInputAction.done,
@@ -121,10 +122,10 @@ class _LoginScreenState extends State<LoginScreen> {
             minimumSize: const Size(100, 42),
           ),
           onPressed: () {
-            if (state != DataState.isLoading) doLogin();
+            if (state.state != DataState.isLoading) doLogin();
           },
           child:
-              state == DataState.isLoading
+              state.state == DataState.isLoading
                   ? const LinearProgressIndicator()
                   : Text(localize.login),
         ),
@@ -133,53 +134,49 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
-          height: size.height,
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(localize.login, style: textTheme.titleLarge),
-                      Text(localize.welcomeApp),
-                      const SizedBox(height: defaultPadding * 4),
-                      fieldEmail(),
-                      const SizedBox(height: defaultPadding * 2),
-                      fieldPassword(),
-                      const SizedBox(height: defaultPadding * 2),
-                      checkAuth(),
-                      const SizedBox(height: defaultPadding * 2),
-                      buttonLogin(),
-                      const SizedBox(height: defaultPadding * 4),
-                    ],
-                  ),
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(defaultPadding),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: defaultPadding,
+                  children: [
+                    const SizedBox(height: 100),
+                    Text(localize.login, style: textTheme.titleLarge),
+                    Text(localize.welcomeApp),
+                    const SizedBox(height: defaultPadding * 2),
+                    fieldEmail(),
+                    fieldPassword(),
+                    checkAuth(),
+                    buttonLogin(),
+                  ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(localize.dontHaveAccount),
-                  InkWell(
-                    child: Text(
-                      localize.register,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      ),
+            ),
+            const SizedBox(height: defaultPadding * 4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(localize.dontHaveAccount),
+                InkWell(
+                  child: Text(
+                    localize.register,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
                     ),
-                    onTap: () {
-                      widget.toRegister();
-                    },
                   ),
-                ],
-              ),
-              const SizedBox(height: defaultPadding),
-            ],
-          ),
+                  onTap: () {
+                    widget.toRegister();
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: defaultPadding),
+          ],
         ),
       ),
     );

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
+  static const routePath = '/register';
+
   const RegisterScreen({super.key, required this.toLogin});
 
   final Function() toLogin;
@@ -26,7 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     final localize = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
-    final size = MediaQuery.of(context).size;
     final state = context.watch<AuthProvider>();
 
     doRegister() async {
@@ -59,7 +60,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     fieldName() {
       return TextField(
-        enabled: state != DataState.isLoading,
+        enabled: state.state != DataState.isLoading,
         controller: _nameTextController,
         keyboardType: TextInputType.name,
         textInputAction: TextInputAction.next,
@@ -74,7 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     fieldEmail() {
       return TextField(
-        enabled: state != DataState.isLoading,
+        enabled: state.state != DataState.isLoading,
         controller: _emailTextController,
         keyboardType: TextInputType.emailAddress,
         textInputAction: TextInputAction.next,
@@ -89,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     fieldPassword() {
       return TextFormField(
-        enabled: state != DataState.isLoading,
+        enabled: state.state != DataState.isLoading,
         controller: _passwordTextController,
         keyboardType: TextInputType.visiblePassword,
         textInputAction: TextInputAction.done,
@@ -138,55 +139,50 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(defaultPadding),
-          height: size.height,
-          child: Column(
-            children: [
-              Expanded(
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(localize.register, style: textTheme.titleLarge),
-                      Text(localize.createNewAccount),
-                      const SizedBox(height: defaultPadding * 4),
-                      fieldName(),
-                      const SizedBox(height: defaultPadding * 2),
-                      fieldEmail(),
-                      const SizedBox(height: defaultPadding * 2),
-                      fieldPassword(),
-                      const SizedBox(height: defaultPadding * 2),
-                      checkAuth(),
-                      const SizedBox(height: defaultPadding * 2),
-                      buttonRegister(),
-                      const SizedBox(height: defaultPadding * 4),
-                    ],
-                  ),
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(defaultPadding),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: defaultPadding,
+                  children: [
+                    const SizedBox(height: 100),
+                    Text(localize.register, style: textTheme.titleLarge),
+                    Text(localize.createNewAccount),
+                    const SizedBox(height: defaultPadding * 2),
+                    fieldName(),
+                    fieldEmail(),
+                    fieldPassword(),
+                    checkAuth(),
+                    buttonRegister(),
+                  ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(localize.haveAnAccount),
-                  InkWell(
-                    child: Text(
-                      localize.login,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent,
-                      ),
+            ),
+            const SizedBox(height: defaultPadding * 4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(localize.haveAnAccount),
+                InkWell(
+                  child: Text(
+                    localize.login,
+                    style: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blueAccent,
                     ),
-                    onTap: () {
-                      widget.toLogin();
-                    },
                   ),
-                ],
-              ),
-              const SizedBox(height: defaultPadding),
-            ],
-          ),
+                  onTap: () {
+                    widget.toLogin();
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: defaultPadding),
+          ],
         ),
       ),
     );

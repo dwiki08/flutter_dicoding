@@ -32,6 +32,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> checkLoginStatus() async {
+    _state = DataState.isLoading;
+    notifyListeners();
+    final token = await _localDataSource.getAuthToken();
+    if (token != null) {
+      _state = DataState.hasData;
+      _isLoggedIn = true;
+    } else {
+      _state = DataState.noData;
+      _isLoggedIn = false;
+    }
+    notifyListeners();
+  }
+
   Future<void> login({required String email, required String password}) async {
     _state = DataState.isLoading;
     notifyListeners();
