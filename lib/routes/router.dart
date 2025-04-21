@@ -104,7 +104,7 @@ final routerConfig = GoRouter(
       builder:
           (context, state) => LocationPickerScreen(
             onPickLocation: (latLng) {
-              context.push(AddStoryScreen.routePath, extra: latLng);
+              context.pop();
             },
           ),
     ),
@@ -113,7 +113,7 @@ final routerConfig = GoRouter(
       builder:
           (context, state) => AddStoryScreen(
             onStoryAdded: () {
-              context.go(HomeScreen.routePath);
+              context.pop();
             },
             onPickLocation: () {
               context.push(LocationPickerScreen.routePath);

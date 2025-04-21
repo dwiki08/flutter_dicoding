@@ -8,13 +8,13 @@ import 'package:dicoding_flutter/providers/state/data_state.dart';
 import 'package:dicoding_flutter/providers/story_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/utils/common.dart';
-import 'package:dicoding_flutter/utils/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
+import '../../providers/location_picker_provider.dart';
 
 class AddStoryPage extends StatefulWidget {
   const AddStoryPage({
@@ -34,7 +34,6 @@ class _AddStoryPageState extends State<AddStoryPage> {
   final _storyTextController = TextEditingController();
   String? filePath;
   LatLng? location;
-  geo.Placemark? placemark;
 
   @override
   void dispose() {
@@ -48,6 +47,7 @@ class _AddStoryPageState extends State<AddStoryPage> {
     final localize = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
+    final locationPickerProvider = context.read<LocationPickerProvider>();
 
     onStoryAdded() {
       widget.onStoryAdded();
@@ -99,11 +99,10 @@ class _AddStoryPageState extends State<AddStoryPage> {
     onPickLocation() async {
       widget.onPickLocation();
       final data = await context.read<PageManager>().waitForResult();
-      final latLng = data.data as LatLng;
-      setState(() async {
-        placemark = await getPlacemark(latLng);
-        location = latLng;
-      });
+      if (data.data is LatLng) {
+        location = data.data as LatLng;
+        await locationPickerProvider.setLocation(location!);
+      }
     }
 
     fab() {
@@ -192,27 +191,41 @@ class _AddStoryPageState extends State<AddStoryPage> {
               label: Text(localize.location),
             ),
             const SizedBox(height: defaultPadding * 2),
-            if (placemark != null)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: colorScheme.onPrimary, width: 2),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                margin: const EdgeInsets.symmetric(horizontal: defaultPadding),
-                padding: const EdgeInsets.all(defaultPadding / 2),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(placemark!.street!, style: textTheme.labelLarge),
-                    Text(
-                      '${placemark!.subLocality}, ${placemark!.locality}, ${placemark!.postalCode}, ${placemark!.country}',
-                      style: textTheme.labelMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
+            Consumer<LocationPickerProvider>(
+              builder: (context, state, child) {
+                if (state.placemark != null) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: colorScheme.onPrimary,
+                        width: 2,
+                      ),
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                  ],
-                ),
-              ),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: defaultPadding,
+                    ),
+                    padding: const EdgeInsets.all(defaultPadding / 2),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          state.placemark!.street!,
+                          style: textTheme.labelLarge,
+                        ),
+                        Text(
+                          '${state.placemark!.subLocality}, ${state.placemark!.locality}, ${state.placemark!.postalCode}, ${state.placemark!.country}',
+                          style: textTheme.labelMedium,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
             Padding(
               padding: const EdgeInsets.all(defaultPadding),
               child: TextField(

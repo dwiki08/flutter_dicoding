@@ -4,6 +4,8 @@ import 'package:dicoding_flutter/screen/add_story/add_story_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/location_picker_provider.dart';
+
 class AddStoryScreen extends StatelessWidget {
   static const routePath = '/add-story';
 
@@ -21,6 +23,7 @@ class AddStoryScreen extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => StoryProvider()),
+        ChangeNotifierProvider(create: (context) => LocationPickerProvider()),
         ChangeNotifierProvider(create: (context) => FilePickerProvider()),
       ],
       child: AddStoryPage(
