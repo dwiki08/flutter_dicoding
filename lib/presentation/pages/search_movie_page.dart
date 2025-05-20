@@ -28,7 +28,7 @@ class _SearchMoviePageState extends State<SearchMoviePage> {
           children: [
             TextField(
               controller: _searchController
-                ..text = context.read<MovieSearchCubit>().lastQuery ?? '',
+                ..text = context.read<MovieSearchCubit>().lastQuery,
               onSubmitted: (query) {
                 context.read<MovieSearchCubit>().searchData(query);
               },

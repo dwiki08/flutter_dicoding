@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-
 class Movie extends Equatable {
   Movie({
     required this.adult,

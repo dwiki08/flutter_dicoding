@@ -14,7 +14,6 @@ import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:ditonton/presentation/widgets/filler_view.dart';
 import 'package:ditonton/presentation/widgets/movie_list.dart';
 import 'package:ditonton/presentation/widgets/tv_list.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
