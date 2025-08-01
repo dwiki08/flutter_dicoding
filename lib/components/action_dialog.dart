@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../common/theme.dart';
-import '../utils/common.dart';
+import '../l10n/app_localizations.dart';
 
 Future<void> actionDialog({
   required BuildContext context,

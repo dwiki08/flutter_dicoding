@@ -2,9 +2,10 @@ import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/components/custom_snackbar.dart';
 import 'package:dicoding_flutter/providers/auth_provider.dart';
 import 'package:dicoding_flutter/providers/state/data_state.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routePath = '/register';

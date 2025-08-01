@@ -3,11 +3,11 @@ import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/providers/auth_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
 import 'package:dicoding_flutter/routes/router.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:dicoding_flutter/utils/injection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'l10n/app_localizations.dart';
 import 'providers/setting_provider.dart';
 
 void main() {

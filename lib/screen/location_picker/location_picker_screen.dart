@@ -1,7 +1,6 @@
 import 'package:dicoding_flutter/common/theme.dart';
 import 'package:dicoding_flutter/components/placemark_view.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:dicoding_flutter/utils/request_permission.dart';
 import 'package:dicoding_flutter/utils/utils.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class LocationPickerScreen extends StatefulWidget {
   static const routePath = '/location-picker';

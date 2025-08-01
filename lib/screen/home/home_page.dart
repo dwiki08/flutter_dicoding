@@ -8,9 +8,10 @@ import 'package:dicoding_flutter/data/model/story.dart';
 import 'package:dicoding_flutter/providers/state/data_state.dart';
 import 'package:dicoding_flutter/providers/story_provider.dart';
 import 'package:dicoding_flutter/routes/page_manager.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../l10n/app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({

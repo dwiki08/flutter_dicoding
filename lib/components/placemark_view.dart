@@ -1,9 +1,10 @@
 import 'package:dicoding_flutter/common/constants.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geocoding/geocoding.dart' as geo;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../l10n/app_localizations.dart';
 
 class PlacemarkView extends StatelessWidget {
   const PlacemarkView({

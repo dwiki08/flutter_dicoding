@@ -1,9 +1,10 @@
 import 'package:dicoding_flutter/common/constants.dart';
 import 'package:dicoding_flutter/providers/setting_provider.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
+import '../l10n/app_localizations.dart';
 
 class DropdownFlags extends StatelessWidget {
   const DropdownFlags({super.key});

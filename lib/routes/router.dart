@@ -9,12 +9,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../components/action_dialog.dart';
+import '../l10n/app_localizations.dart';
 import '../screen/home/home_screen.dart';
 import '../screen/location_picker/location_picker_screen.dart';
 import '../screen/map_viewer/map_viewer_screen.dart';
 import '../screen/register/register_screen.dart';
 import '../screen/story/story_screen.dart';
-import '../utils/common.dart';
 import '../utils/injection.dart';
 
 final routerConfig = GoRouter(

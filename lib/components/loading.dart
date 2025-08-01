@@ -1,6 +1,7 @@
 import 'package:dicoding_flutter/common/theme.dart';
-import 'package:dicoding_flutter/utils/common.dart';
 import 'package:flutter/material.dart';
+
+import '../l10n/app_localizations.dart';
 
 class Loading extends StatelessWidget {
   const Loading({super.key});
