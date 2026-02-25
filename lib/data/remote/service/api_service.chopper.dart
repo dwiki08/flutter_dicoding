@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 part of 'api_service.dart';
@@ -20,25 +21,19 @@ final class _$ApiService extends ApiService {
   @override
   Future<Response<RestaurantListResponse>> getRestaurants() {
     final Uri $url = Uri.parse('/list');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
+    final Request $request = Request('GET', $url, client.baseUrl);
+    return client.send<RestaurantListResponse, RestaurantListResponse>(
+      $request,
     );
-    return client
-        .send<RestaurantListResponse, RestaurantListResponse>($request);
   }
 
   @override
   Future<Response<RestaurantDetailResponse>> getRestaurant(String id) {
     final Uri $url = Uri.parse('/detail/${id}');
-    final Request $request = Request(
-      'GET',
-      $url,
-      client.baseUrl,
+    final Request $request = Request('GET', $url, client.baseUrl);
+    return client.send<RestaurantDetailResponse, RestaurantDetailResponse>(
+      $request,
     );
-    return client
-        .send<RestaurantDetailResponse, RestaurantDetailResponse>($request);
   }
 
   @override
@@ -51,20 +46,16 @@ final class _$ApiService extends ApiService {
       client.baseUrl,
       parameters: $params,
     );
-    return client
-        .send<RestaurantListResponse, RestaurantListResponse>($request);
+    return client.send<RestaurantListResponse, RestaurantListResponse>(
+      $request,
+    );
   }
 
   @override
   Future<Response<GeneralResponse>> addReview(AddReviewRequest body) {
     final Uri $url = Uri.parse('/review');
     final $body = body;
-    final Request $request = Request(
-      'POST',
-      $url,
-      client.baseUrl,
-      body: $body,
-    );
+    final Request $request = Request('POST', $url, client.baseUrl, body: $body);
     return client.send<GeneralResponse, GeneralResponse>($request);
   }
 }

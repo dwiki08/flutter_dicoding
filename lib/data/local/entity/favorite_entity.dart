@@ -1,8 +1,4 @@
-import 'package:floor/floor.dart';
-
-@Entity(tableName: 'restaurant')
 class RestaurantEntity {
-  @PrimaryKey()
   final String restaurantId;
   final String name;
   final String description;

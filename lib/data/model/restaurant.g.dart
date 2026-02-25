@@ -15,15 +15,18 @@ _$RestaurantImpl _$$RestaurantImplFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String,
       pictureId: json['pictureId'] as String,
       rating: (json['rating'] as num).toDouble(),
-      categories: (json['categories'] as List<dynamic>?)
-          ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      menus: json['menus'] == null
-          ? null
-          : Menus.fromJson(json['menus'] as Map<String, dynamic>),
-      customerReviews: (json['customerReviews'] as List<dynamic>?)
-          ?.map((e) => CustomerReview.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      categories:
+          (json['categories'] as List<dynamic>?)
+              ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+              .toList(),
+      menus:
+          json['menus'] == null
+              ? null
+              : Menus.fromJson(json['menus'] as Map<String, dynamic>),
+      customerReviews:
+          (json['customerReviews'] as List<dynamic>?)
+              ?.map((e) => CustomerReview.fromJson(e as Map<String, dynamic>))
+              .toList(),
     );
 
 Map<String, dynamic> _$$RestaurantImplToJson(_$RestaurantImpl instance) =>
@@ -41,29 +44,24 @@ Map<String, dynamic> _$$RestaurantImplToJson(_$RestaurantImpl instance) =>
     };
 
 _$CategoryImpl _$$CategoryImplFromJson(Map<String, dynamic> json) =>
-    _$CategoryImpl(
-      name: json['name'] as String,
-    );
+    _$CategoryImpl(name: json['name'] as String);
 
 Map<String, dynamic> _$$CategoryImplToJson(_$CategoryImpl instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-    };
+    <String, dynamic>{'name': instance.name};
 
 _$MenusImpl _$$MenusImplFromJson(Map<String, dynamic> json) => _$MenusImpl(
-      foods: (json['foods'] as List<dynamic>)
+  foods:
+      (json['foods'] as List<dynamic>)
           .map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
-      drinks: (json['drinks'] as List<dynamic>)
+  drinks:
+      (json['drinks'] as List<dynamic>)
           .map((e) => Category.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
+);
 
 Map<String, dynamic> _$$MenusImplToJson(_$MenusImpl instance) =>
-    <String, dynamic>{
-      'foods': instance.foods,
-      'drinks': instance.drinks,
-    };
+    <String, dynamic>{'foods': instance.foods, 'drinks': instance.drinks};
 
 _$CustomerReviewImpl _$$CustomerReviewImplFromJson(Map<String, dynamic> json) =>
     _$CustomerReviewImpl(
@@ -73,9 +71,9 @@ _$CustomerReviewImpl _$$CustomerReviewImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$CustomerReviewImplToJson(
-        _$CustomerReviewImpl instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'review': instance.review,
-      'date': instance.date,
-    };
+  _$CustomerReviewImpl instance,
+) => <String, dynamic>{
+  'name': instance.name,
+  'review': instance.review,
+  'date': instance.date,
+};

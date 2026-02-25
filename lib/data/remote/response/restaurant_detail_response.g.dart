@@ -7,20 +7,22 @@ part of 'restaurant_detail_response.dart';
 // **************************************************************************
 
 RestaurantDetailResponse _$RestaurantDetailResponseFromJson(
-        Map<String, dynamic> json) =>
-    RestaurantDetailResponse(
-      error: json['error'] as bool?,
-      message: json['message'] as String?,
-      restaurant: json['restaurant'] == null
+  Map<String, dynamic> json,
+) => RestaurantDetailResponse(
+  error: json['error'] as bool?,
+  message: json['message'] as String?,
+  restaurant:
+      json['restaurant'] == null
           ? null
           : RestaurantResponse.fromJson(
-              json['restaurant'] as Map<String, dynamic>),
-    );
+            json['restaurant'] as Map<String, dynamic>,
+          ),
+);
 
 Map<String, dynamic> _$RestaurantDetailResponseToJson(
-        RestaurantDetailResponse instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'message': instance.message,
-      'restaurant': instance.restaurant,
-    };
+  RestaurantDetailResponse instance,
+) => <String, dynamic>{
+  'error': instance.error,
+  'message': instance.message,
+  'restaurant': instance.restaurant,
+};

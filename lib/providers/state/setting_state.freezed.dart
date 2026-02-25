@@ -12,7 +12,8 @@ part of 'setting_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$SettingState {
@@ -28,9 +29,9 @@ mixin _$SettingState {
 /// @nodoc
 abstract class $SettingStateCopyWith<$Res> {
   factory $SettingStateCopyWith(
-          SettingState value, $Res Function(SettingState) then) =
-      _$SettingStateCopyWithImpl<$Res, SettingState>;
-
+    SettingState value,
+    $Res Function(SettingState) then,
+  ) = _$SettingStateCopyWithImpl<$Res, SettingState>;
   @useResult
   $Res call({bool notification});
 }
@@ -42,7 +43,6 @@ class _$SettingStateCopyWithImpl<$Res, $Val extends SettingState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -50,15 +50,17 @@ class _$SettingStateCopyWithImpl<$Res, $Val extends SettingState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? notification = null,
-  }) {
-    return _then(_value.copyWith(
-      notification: null == notification
-          ? _value.notification
-          : notification // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+  $Res call({Object? notification = null}) {
+    return _then(
+      _value.copyWith(
+            notification:
+                null == notification
+                    ? _value.notification
+                    : notification // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -66,9 +68,9 @@ class _$SettingStateCopyWithImpl<$Res, $Val extends SettingState>
 abstract class _$$SettingStateImplCopyWith<$Res>
     implements $SettingStateCopyWith<$Res> {
   factory _$$SettingStateImplCopyWith(
-          _$SettingStateImpl value, $Res Function(_$SettingStateImpl) then) =
-      __$$SettingStateImplCopyWithImpl<$Res>;
-
+    _$SettingStateImpl value,
+    $Res Function(_$SettingStateImpl) then,
+  ) = __$$SettingStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool notification});
@@ -79,22 +81,24 @@ class __$$SettingStateImplCopyWithImpl<$Res>
     extends _$SettingStateCopyWithImpl<$Res, _$SettingStateImpl>
     implements _$$SettingStateImplCopyWith<$Res> {
   __$$SettingStateImplCopyWithImpl(
-      _$SettingStateImpl _value, $Res Function(_$SettingStateImpl) _then)
-      : super(_value, _then);
+    _$SettingStateImpl _value,
+    $Res Function(_$SettingStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SettingState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? notification = null,
-  }) {
-    return _then(_$SettingStateImpl(
-      notification: null == notification
-          ? _value.notification
-          : notification // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+  $Res call({Object? notification = null}) {
+    return _then(
+      _$SettingStateImpl(
+        notification:
+            null == notification
+                ? _value.notification
+                : notification // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 

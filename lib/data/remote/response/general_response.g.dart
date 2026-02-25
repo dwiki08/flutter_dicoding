@@ -13,7 +13,4 @@ GeneralResponse _$GeneralResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$GeneralResponseToJson(GeneralResponse instance) =>
-    <String, dynamic>{
-      'error': instance.error,
-      'message': instance.message,
-    };
+    <String, dynamic>{'error': instance.error, 'message': instance.message};

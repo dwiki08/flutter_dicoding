@@ -12,18 +12,15 @@ part of 'restaurant_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$RestaurantState {
   bool get isLoading => throw _privateConstructorUsedError;
-
   ErrorResult? get error => throw _privateConstructorUsedError;
-
   List<Restaurant> get listRestaurants => throw _privateConstructorUsedError;
-
   Restaurant? get restaurant => throw _privateConstructorUsedError;
-
   bool get isFavorite => throw _privateConstructorUsedError;
 
   /// Create a copy of RestaurantState
@@ -36,19 +33,19 @@ mixin _$RestaurantState {
 /// @nodoc
 abstract class $RestaurantStateCopyWith<$Res> {
   factory $RestaurantStateCopyWith(
-          RestaurantState value, $Res Function(RestaurantState) then) =
-      _$RestaurantStateCopyWithImpl<$Res, RestaurantState>;
-
+    RestaurantState value,
+    $Res Function(RestaurantState) then,
+  ) = _$RestaurantStateCopyWithImpl<$Res, RestaurantState>;
   @useResult
-  $Res call(
-      {bool isLoading,
-      ErrorResult? error,
-      List<Restaurant> listRestaurants,
-      Restaurant? restaurant,
-      bool isFavorite});
+  $Res call({
+    bool isLoading,
+    ErrorResult? error,
+    List<Restaurant> listRestaurants,
+    Restaurant? restaurant,
+    bool isFavorite,
+  });
 
   $ErrorResultCopyWith<$Res>? get error;
-
   $RestaurantCopyWith<$Res>? get restaurant;
 }
 
@@ -59,7 +56,6 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -74,28 +70,36 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
     Object? restaurant = freezed,
     Object? isFavorite = null,
   }) {
-    return _then(_value.copyWith(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as ErrorResult?,
-      listRestaurants: null == listRestaurants
-          ? _value.listRestaurants
-          : listRestaurants // ignore: cast_nullable_to_non_nullable
-              as List<Restaurant>,
-      restaurant: freezed == restaurant
-          ? _value.restaurant
-          : restaurant // ignore: cast_nullable_to_non_nullable
-              as Restaurant?,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            isLoading:
+                null == isLoading
+                    ? _value.isLoading
+                    : isLoading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            error:
+                freezed == error
+                    ? _value.error
+                    : error // ignore: cast_nullable_to_non_nullable
+                        as ErrorResult?,
+            listRestaurants:
+                null == listRestaurants
+                    ? _value.listRestaurants
+                    : listRestaurants // ignore: cast_nullable_to_non_nullable
+                        as List<Restaurant>,
+            restaurant:
+                freezed == restaurant
+                    ? _value.restaurant
+                    : restaurant // ignore: cast_nullable_to_non_nullable
+                        as Restaurant?,
+            isFavorite:
+                null == isFavorite
+                    ? _value.isFavorite
+                    : isFavorite // ignore: cast_nullable_to_non_nullable
+                        as bool,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of RestaurantState
@@ -130,22 +134,22 @@ class _$RestaurantStateCopyWithImpl<$Res, $Val extends RestaurantState>
 /// @nodoc
 abstract class _$$RestaurantStateImplCopyWith<$Res>
     implements $RestaurantStateCopyWith<$Res> {
-  factory _$$RestaurantStateImplCopyWith(_$RestaurantStateImpl value,
-          $Res Function(_$RestaurantStateImpl) then) =
-      __$$RestaurantStateImplCopyWithImpl<$Res>;
-
+  factory _$$RestaurantStateImplCopyWith(
+    _$RestaurantStateImpl value,
+    $Res Function(_$RestaurantStateImpl) then,
+  ) = __$$RestaurantStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool isLoading,
-      ErrorResult? error,
-      List<Restaurant> listRestaurants,
-      Restaurant? restaurant,
-      bool isFavorite});
+  $Res call({
+    bool isLoading,
+    ErrorResult? error,
+    List<Restaurant> listRestaurants,
+    Restaurant? restaurant,
+    bool isFavorite,
+  });
 
   @override
   $ErrorResultCopyWith<$Res>? get error;
-
   @override
   $RestaurantCopyWith<$Res>? get restaurant;
 }
@@ -155,8 +159,9 @@ class __$$RestaurantStateImplCopyWithImpl<$Res>
     extends _$RestaurantStateCopyWithImpl<$Res, _$RestaurantStateImpl>
     implements _$$RestaurantStateImplCopyWith<$Res> {
   __$$RestaurantStateImplCopyWithImpl(
-      _$RestaurantStateImpl _value, $Res Function(_$RestaurantStateImpl) _then)
-      : super(_value, _then);
+    _$RestaurantStateImpl _value,
+    $Res Function(_$RestaurantStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of RestaurantState
   /// with the given fields replaced by the non-null parameter values.
@@ -169,41 +174,48 @@ class __$$RestaurantStateImplCopyWithImpl<$Res>
     Object? restaurant = freezed,
     Object? isFavorite = null,
   }) {
-    return _then(_$RestaurantStateImpl(
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as ErrorResult?,
-      listRestaurants: null == listRestaurants
-          ? _value._listRestaurants
-          : listRestaurants // ignore: cast_nullable_to_non_nullable
-              as List<Restaurant>,
-      restaurant: freezed == restaurant
-          ? _value.restaurant
-          : restaurant // ignore: cast_nullable_to_non_nullable
-              as Restaurant?,
-      isFavorite: null == isFavorite
-          ? _value.isFavorite
-          : isFavorite // ignore: cast_nullable_to_non_nullable
-              as bool,
-    ));
+    return _then(
+      _$RestaurantStateImpl(
+        isLoading:
+            null == isLoading
+                ? _value.isLoading
+                : isLoading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        error:
+            freezed == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                    as ErrorResult?,
+        listRestaurants:
+            null == listRestaurants
+                ? _value._listRestaurants
+                : listRestaurants // ignore: cast_nullable_to_non_nullable
+                    as List<Restaurant>,
+        restaurant:
+            freezed == restaurant
+                ? _value.restaurant
+                : restaurant // ignore: cast_nullable_to_non_nullable
+                    as Restaurant?,
+        isFavorite:
+            null == isFavorite
+                ? _value.isFavorite
+                : isFavorite // ignore: cast_nullable_to_non_nullable
+                    as bool,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$RestaurantStateImpl implements _RestaurantState {
-  const _$RestaurantStateImpl(
-      {this.isLoading = false,
-      this.error,
-      final List<Restaurant> listRestaurants = const [],
-      this.restaurant,
-      this.isFavorite = false})
-      : _listRestaurants = listRestaurants;
+  const _$RestaurantStateImpl({
+    this.isLoading = false,
+    this.error,
+    final List<Restaurant> listRestaurants = const [],
+    this.restaurant,
+    this.isFavorite = false,
+  }) : _listRestaurants = listRestaurants;
 
   @override
   @JsonKey()
@@ -211,7 +223,6 @@ class _$RestaurantStateImpl implements _RestaurantState {
   @override
   final ErrorResult? error;
   final List<Restaurant> _listRestaurants;
-
   @override
   @JsonKey()
   List<Restaurant> get listRestaurants {
@@ -239,8 +250,10 @@ class _$RestaurantStateImpl implements _RestaurantState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.error, error) || other.error == error) &&
-            const DeepCollectionEquality()
-                .equals(other._listRestaurants, _listRestaurants) &&
+            const DeepCollectionEquality().equals(
+              other._listRestaurants,
+              _listRestaurants,
+            ) &&
             (identical(other.restaurant, restaurant) ||
                 other.restaurant == restaurant) &&
             (identical(other.isFavorite, isFavorite) ||
@@ -249,12 +262,13 @@ class _$RestaurantStateImpl implements _RestaurantState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      isLoading,
-      error,
-      const DeepCollectionEquality().hash(_listRestaurants),
-      restaurant,
-      isFavorite);
+    runtimeType,
+    isLoading,
+    error,
+    const DeepCollectionEquality().hash(_listRestaurants),
+    restaurant,
+    isFavorite,
+  );
 
   /// Create a copy of RestaurantState
   /// with the given fields replaced by the non-null parameter values.
@@ -263,29 +277,28 @@ class _$RestaurantStateImpl implements _RestaurantState {
   @pragma('vm:prefer-inline')
   _$$RestaurantStateImplCopyWith<_$RestaurantStateImpl> get copyWith =>
       __$$RestaurantStateImplCopyWithImpl<_$RestaurantStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _RestaurantState implements RestaurantState {
-  const factory _RestaurantState(
-      {final bool isLoading,
-      final ErrorResult? error,
-      final List<Restaurant> listRestaurants,
-      final Restaurant? restaurant,
-      final bool isFavorite}) = _$RestaurantStateImpl;
+  const factory _RestaurantState({
+    final bool isLoading,
+    final ErrorResult? error,
+    final List<Restaurant> listRestaurants,
+    final Restaurant? restaurant,
+    final bool isFavorite,
+  }) = _$RestaurantStateImpl;
 
   @override
   bool get isLoading;
-
   @override
   ErrorResult? get error;
-
   @override
   List<Restaurant> get listRestaurants;
-
   @override
   Restaurant? get restaurant;
-
   @override
   bool get isFavorite;
 

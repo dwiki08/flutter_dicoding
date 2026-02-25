@@ -48,9 +48,11 @@ dependencies:
   intl: ^0.19.0
   flutter_local_notifications: ^18.0.1
   path: ^1.8.0
-  floor: ^1.5.0
+  drift: ^2.7.0
+  sqlite3_flutter_libs: ^0.5.8
+  sqflite: ^2.2.8+4
   get_it: ^7.7.0
-  mockito: ^5.4.4
+  
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +61,8 @@ dev_dependencies:
   freezed: ^2.5.3
   json_serializable: ^6.8.0
   chopper_generator: ^8.0.0
-  floor_generator: ^1.5.0
+  drift_dev: ^2.7.0
+  mockito: ^5.4.4
 
 dependency_overrides:
   meta: ^1.15.0
